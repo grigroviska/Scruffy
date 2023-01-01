@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "534496438948",
+    "project_id": "scruffy-9a1bb",
+    "storage_bucket": "scruffy-9a1bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534496438948:android:449c4ff88623dfe6d79431",
+        "android_client_info": {
+          "package_name": "com.gematriga.scruffy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "534496438948-ou5j0huba6uqkmkms03nhhrgj257bm7e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_Msd7srYLWuacjW4FZ6N1odbZwCxoOdE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "534496438948-ou5j0huba6uqkmkms03nhhrgj257bm7e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
