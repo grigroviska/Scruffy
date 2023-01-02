@@ -1,4 +1,4 @@
-package com.gematriga.scruffy
+package com.gematriga.scruffy.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -12,12 +12,11 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
-import com.gematriga.scruffy.databinding.ActivityMainBinding
+import com.gematriga.scruffy.R
 import com.gematriga.scruffy.databinding.ActivityOtpactivityBinding
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
-import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
 import java.util.concurrent.TimeUnit
 
 class OTPActivity : AppCompatActivity() {

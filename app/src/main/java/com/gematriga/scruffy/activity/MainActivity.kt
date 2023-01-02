@@ -1,5 +1,6 @@
-package com.gematriga.scruffy
+package com.gematriga.scruffy.activity
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,8 +8,14 @@ import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import com.gematriga.scruffy.R
 import com.gematriga.scruffy.databinding.ActivityMainBinding
-import com.google.firebase.FirebaseApp
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
@@ -18,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var auth : FirebaseAuth
+    private lateinit var googleSignInClient : GoogleSignInClient
     private lateinit var number : String
     private lateinit var mProgressBar : ProgressBar
 
@@ -26,39 +34,119 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        println("selam")
-
         gba()
 
         binding.sendOTPBtn.setOnClickListener {
 
             val countryCode = binding.ccp.selectedCountryCode.toString()
-            number = binding.phoneEditTextNumber.text.trim().toString()
+            number = binding.phoneEditTextNumber.text!!.trim().toString()
             if (number.isNotEmpty()){
 
-                if(number.length == 10){
+                println(countryCode)
+                println(number)
+                println("$countryCode $number")
 
-                    Toast.makeText(this,"$countryCode$number", Toast.LENGTH_LONG).show()
-                    number = "+91$number"
-                    mProgressBar.visibility = View.VISIBLE
-                    val options = PhoneAuthOptions.newBuilder(auth)
-                        .setPhoneNumber(number)       // Phone number to verify
-                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-                        .setActivity(this)                 // Activity (for callback binding)
-                        .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
-                        .build()
-                    PhoneAuthProvider.verifyPhoneNumber(options)
+                try {
+                    if(number.length == 10){
+
+                        number = "+$countryCode $number"
+                        mProgressBar.visibility = View.VISIBLE
+                        val options = PhoneAuthOptions.newBuilder(auth)
+                            .setPhoneNumber(number)       // Phone number to verify
+                            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                            .setActivity(this)                 // Activity (for callback binding)
+                            .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
+                            .build()
+                        PhoneAuthProvider.verifyPhoneNumber(options)
 
 
-                }else{
+                    }else{
 
-                    Toast.makeText(this,"Please Enter Correct Number", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this,"Please Enter Correct Number", Toast.LENGTH_LONG).show()
+
+                    }
+                }catch (e : Exception){
+
+                    Toast.makeText(this, e.localizedMessage, Toast.LENGTH_LONG).show()
 
                 }
+
 
             }else{
 
                 Toast.makeText(this,"Please Enter Correct Number", Toast.LENGTH_LONG).show()
+
+            }
+
+        }
+
+        binding.signInGoogle.setOnClickListener {
+
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken("534496438948-ou5j0huba6uqkmkms03nhhrgj257bm7e.apps.googleusercontent.com")
+                .requestEmail()
+                .build()
+
+            googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+            signInGoogle()
+
+        }
+
+    }
+
+    private fun signInGoogle() {
+
+        val signInIntent = googleSignInClient.signInIntent
+
+        launcher.launch(signInIntent)
+
+    }
+
+    private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+
+        result ->
+
+            if(result.resultCode == Activity.RESULT_OK){
+
+                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                handleResults(task)
+
+            }
+
+    }
+
+    private fun handleResults(task: Task<GoogleSignInAccount>) {
+        if (task.isSuccessful){
+
+            val account : GoogleSignInAccount? = task.result
+            if (account != null){
+
+                updateUI(account)
+
+            }
+
+        }else{
+
+            Toast.makeText(this,task.exception.toString(),Toast.LENGTH_LONG).show()
+
+        }
+    }
+
+    private fun updateUI(account: GoogleSignInAccount) {
+
+        val credential = GoogleAuthProvider.getCredential(account.idToken,null)
+        auth.signInWithCredential(credential).addOnCompleteListener {
+
+            if (it.isSuccessful){
+
+                val intent : Intent = Intent(this, HomeActivity::class.java)
+                intent.putExtra("email", account.email)
+                startActivity(intent)
+
+            }else{
+
+                Toast.makeText(this,it.exception.toString(),Toast.LENGTH_LONG).show()
 
             }
 
@@ -152,7 +240,7 @@ class MainActivity : AppCompatActivity() {
 
         if (auth.currentUser != null){
 
-            startActivity(Intent(this@MainActivity,HomeActivity::class.java))
+            startActivity(Intent(this@MainActivity, HomeActivity::class.java))
 
         }
 

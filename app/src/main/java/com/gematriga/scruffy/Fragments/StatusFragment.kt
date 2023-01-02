@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.gematriga.scruffy.R
-import com.gematriga.scruffy.databinding.FragmentSettingsBinding
+import com.gematriga.scruffy.databinding.FragmentChatsBinding
+import com.gematriga.scruffy.databinding.FragmentStatusBinding
 
+class StatusFragment : Fragment() {
 
-class SettingsFragment : Fragment() {
-
-    private var _binding: FragmentSettingsBinding? = null
+    private var _binding: FragmentStatusBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +23,7 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        _binding = FragmentStatusBinding.inflate(inflater, container, false)
         val view = binding.root
         return view
     }

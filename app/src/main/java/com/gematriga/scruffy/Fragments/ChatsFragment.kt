@@ -6,10 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.gematriga.scruffy.R
+import com.gematriga.scruffy.databinding.FragmentChatsBinding
+import com.gematriga.scruffy.databinding.FragmentSettingsBinding
 
 
 class ChatsFragment : Fragment() {
 
+    private var _binding: FragmentChatsBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,9 +23,15 @@ class ChatsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chats, container, false)
+    ): View {
+        _binding = FragmentChatsBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

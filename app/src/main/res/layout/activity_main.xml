@@ -4,85 +4,132 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:padding="24dp"
+    tools:context=".activity.MainActivity">
 
     <ImageView
         android:id="@+id/headImage"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:src="@drawable/simpson"
+        android:layout_height="220dp"
+        android:src="@drawable/sign_in_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <com.hbb20.CountryCodePicker
-        android:id="@+id/ccp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        app:ccp_autoDetectCountry="true"
-        app:ccp_showNameCode="false"
-        app:layout_constraintEnd_toStartOf="@+id/phoneEditTextNumber"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/phoneEditTextNumber"
-        tools:ccp_contentColor="#fcfdfd"
-        tools:ccp_textSize="20dp"
-        tools:layout_editor_absoluteY="369dp" />
-
-    <EditText
-        android:id="@+id/phoneEditTextNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginEnd="68dp"
-        android:ems="10"
-        android:hint="Type your number"
-        android:inputType="phone"
-        android:paddingStart="16dp"
-        android:textColor="@color/black"
-        android:textColorHint="#606060"
-        app:layout_constraintBottom_toBottomOf="@+id/ccp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ccp" />
 
     <TextView
         android:id="@+id/mobileText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="Login With Mobile Number"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/phoneEditTextNumber"
-        app:layout_constraintStart_toStartOf="@+id/ccp"
-        app:layout_constraintTop_toBottomOf="@+id/phoneProgressBar" />
-
-    <Button
-        android:id="@+id/sendOTPBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="55dp"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="160dp"
-        android:text="Send otp"
-        android:textColor="@color/white"
+        android:layout_marginBottom="20dp"
+        android:text="@string/verifyNumberText"
+        android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phoneEditTextNumber" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headImage"/>
+
+    <TextView
+        android:id="@+id/verifyInfoText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/verifyInfoText"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mobileText"
+        tools:ignore="SmallSp" />
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        app:cardElevation="8dp"
+        app:layout_constraintTop_toBottomOf="@id/verifyInfoText"
+        app:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteX="28dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/ccp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    app:ccp_autoDetectCountry="true"
+                    app:ccpDialog_textColor="@color/white"
+                    app:ccp_contentColor="@color/white"
+                    app:ccp_showNameCode="false"
+                    tools:ccp_textSize="20dp"
+                    tools:layout_editor_absoluteY="369dp" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phoneEditTextNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:hint="@string/typeYourNumber"
+                    android:inputType="phone" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/sendOTPBtn"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/verifySendButton"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                />
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/signInGoogle"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center"
+                />
+
+        </LinearLayout>
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
 
     <ProgressBar
         android:id="@+id/phoneProgressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/mobileText"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headImage" />
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainLayout"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
