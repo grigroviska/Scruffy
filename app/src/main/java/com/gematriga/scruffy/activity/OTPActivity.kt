@@ -45,10 +45,13 @@ class OTPActivity : AppCompatActivity() {
         resendToken = intent.getParcelableExtra("resendToken")!!
         phoneNumber = intent.getStringExtra("phoneNumber")!!
 
+        binding.verifyNumberText.text = "Verify Number  $phoneNumber"
+
         init()
         progressBar.visibility = View.INVISIBLE
         addTextChangeListener()
         resendOTPTvVisibility()
+        inputOTP1.requestFocus()
 
         binding.resendTextView.setOnClickListener {
 
@@ -142,7 +145,8 @@ class OTPActivity : AppCompatActivity() {
 
     private fun sendToMain(){
 
-        startActivity(Intent(this, HomeActivity::class.java))
+        startActivity(Intent(this, ProfileActivity::class.java))
+        finish()
 
     }
 
@@ -232,7 +236,7 @@ class OTPActivity : AppCompatActivity() {
                 R.id.otpEditText3 -> if (text.length == 1) inputOTP4.requestFocus() else if(text.isEmpty()) inputOTP2.requestFocus()
                 R.id.otpEditText4 -> if (text.length == 1) inputOTP5.requestFocus() else if(text.isEmpty()) inputOTP3.requestFocus()
                 R.id.otpEditText5 -> if (text.length == 1) inputOTP6.requestFocus() else if(text.isEmpty()) inputOTP4.requestFocus()
-                R.id.otpEditText6 -> if (text.length == 1) if(text.isEmpty()) inputOTP5.requestFocus()
+                R.id.otpEditText6 -> if (text.length == 1) inputOTP6.clearFocus()   else if(text.isEmpty()) inputOTP5.requestFocus()
 
             }
 

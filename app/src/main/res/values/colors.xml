@@ -11,5 +11,6 @@
     <color name="colorPrimary">#128C7E</color>
     <color name="colorPrimaryDark">#075E54</color>
     <color name="ascent">#25D366</color>
+    <color name="softBlue">#14a7d0</color>
 
 </resources>

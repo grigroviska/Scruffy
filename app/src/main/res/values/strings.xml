@@ -5,5 +5,9 @@
     <string name="verifyInfoText">We will send verification code on your number to verify.</string>
     <string name="verifySendButton">Send OTP</string>
     <string name="typeYourNumber">Type Your Number</string>
+    <string name="profileText">Profile Info</string>
+    <string name="nameInput">Enter Your Name</string>
+    <string name="continueButtonText">Continue</string>
+    <string name="editNameAndImage">Please set your name and image</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

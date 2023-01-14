@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "534496438948",
+    "firebase_url": "https://scruffy-9a1bb-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "scruffy-9a1bb",
     "storage_bucket": "scruffy-9a1bb.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "534496438948-ph5b7frb84rdqa5nfdda5eqqj3phjb3n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gematriga.scruffy",
+            "certificate_hash": "597e1ef88139e26dad1b987baec88b52335ff295"
+          }
+        },
         {
           "client_id": "534496438948-ou5j0huba6uqkmkms03nhhrgj257bm7e.apps.googleusercontent.com",
           "client_type": 3

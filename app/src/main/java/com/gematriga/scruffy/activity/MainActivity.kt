@@ -36,15 +36,17 @@ class MainActivity : AppCompatActivity() {
 
         gba()
 
+        if(auth.currentUser != null){
+
+            startActivity(Intent(this, HomeActivity::class.java))
+
+        }
+
         binding.sendOTPBtn.setOnClickListener {
 
             val countryCode = binding.ccp.selectedCountryCode.toString()
             number = binding.phoneEditTextNumber.text!!.trim().toString()
             if (number.isNotEmpty()){
-
-                println(countryCode)
-                println(number)
-                println("$countryCode $number")
 
                 try {
                     if(number.length == 10){
@@ -159,6 +161,8 @@ class MainActivity : AppCompatActivity() {
         mProgressBar = findViewById(R.id.phoneProgressBar)
         mProgressBar.visibility = View.INVISIBLE
         auth = FirebaseAuth.getInstance()
+
+
 
     }
 
