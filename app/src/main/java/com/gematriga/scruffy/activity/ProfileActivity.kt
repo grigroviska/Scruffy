@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.gematriga.scruffy.databinding.ActivityHomeBinding
 import com.gematriga.scruffy.databinding.ActivityProfileBinding
 import com.gematriga.scruffy.model.UserModel
 import com.google.firebase.auth.FirebaseAuth
@@ -45,6 +44,7 @@ class ProfileActivity : AppCompatActivity() {
 
         }
 
+
         binding.continueButton.setOnClickListener {
 
             try {
@@ -71,6 +71,7 @@ class ProfileActivity : AppCompatActivity() {
 
     }
 
+
     private fun uploadData() {
 
         val reference = storage.reference.child("Profile").child(Date().time.toString())
@@ -78,10 +79,9 @@ class ProfileActivity : AppCompatActivity() {
 
             if (it.isSuccessful){
 
-                reference.downloadUrl.addOnCompleteListener { task ->
+                reference.downloadUrl.addOnSuccessListener { task ->
 
-                    uploadInfo(task.toString())
-
+                        uploadInfo(task.toString())
                 }
 
             }
@@ -93,7 +93,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun uploadInfo(imgUrl: String) {
 
         val user = UserModel(auth.uid.toString(), binding.userName.text.toString(), auth.currentUser!!.phoneNumber.toString(), imgUrl)
-
+        println(imgUrl)
         database.reference.child("users")
             .child(auth.uid.toString())
             .setValue(user)

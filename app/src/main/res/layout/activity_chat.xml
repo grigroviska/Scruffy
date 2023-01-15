@@ -7,16 +7,52 @@
     android:layout_height="match_parent"
     tools:context=".activity.ChatActivity">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/materialToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/scruffy_back"
+            android:layout_marginRight="2dp"/>
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/nickProfile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/scruffy_logo"
+            android:layout_marginRight="10dp"/>
+
+
+        <TextView
+            android:id="@+id/nickName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Username"/>
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        tools:listitem="@layout/send_item_layout"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/materialCardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/materialToolbar"
+        tools:listitem="@layout/send_item_layout" />
 
     <ImageView
         android:id="@+id/sendMessage"
@@ -49,7 +85,8 @@
             android:layout_gravity="center"
             android:background="@android:color/transparent"
             android:hint="Enter Your Message"
-            android:padding="8dp"
+            android:padding="10dp"
+            android:layout_marginLeft="10dp"
             android:textSize="14sp" />
 
     </com.google.android.material.card.MaterialCardView>
