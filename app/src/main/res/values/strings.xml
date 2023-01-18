@@ -10,4 +10,6 @@
     <string name="continueButtonText">Continue</string>
     <string name="editNameAndImage">Please set your name and image</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 </resources>

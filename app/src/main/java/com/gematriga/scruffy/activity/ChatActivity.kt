@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Message
 import android.util.Log
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
@@ -36,6 +37,9 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var receiverRoom : String
 
     private lateinit var list : ArrayList<MessageModel>
+    var url : String? = null
+    var nickName : String? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -117,10 +121,11 @@ class ChatActivity : AppCompatActivity() {
         dReference = FirebaseDatabase.getInstance().getReference("users")
         dReference.child(receiverUid).get()
             .addOnSuccessListener {
-                val url = it.child("imageUrl").value.toString()
-                val nickName = it.child("name").value.toString()
+                url = it.child("imageUrl").value.toString()
+                nickName = it.child("name").value.toString()
 
                 Glide.with(this).load(url).into(binding.nickProfile)
+
                 binding.nickName.setText(nickName)
             }.addOnFailureListener {
                 Log.e("firebase", "Error getting data", it)
