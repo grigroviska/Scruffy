@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/nav_home"
@@ -27,8 +28,15 @@
         android:icon="@drawable/scruffy_help"/>
 
     <item
+        android:id="@+id/nav_github"
+        android:title="Github"
+        android:icon="@drawable/scruffy_github"/>
+
+    <item
         android:id="@+id/sign_out"
         android:title="Sign Out"
         android:icon="@drawable/scruffy_sign_out"/>
+
+
 
 </menu>

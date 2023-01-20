@@ -1,10 +1,15 @@
 package com.gematriga.scruffy.activity
 
+import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.LiveFolders.INTENT
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
+import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -22,7 +27,10 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.nav_header.*
 
 
 class HomeActivity : AppCompatActivity() {
@@ -36,14 +44,18 @@ class HomeActivity : AppCompatActivity() {
     var phoneNumber : String? = null
     var auId : String? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbarMain)
+        setSupportActionBar(binding.materialToolbar)
 
         auth = FirebaseAuth.getInstance()
+        dReference = Firebase.database.reference
         auId = auth.currentUser?.uid.toString()
+
+        checkData()
 
         replaceFragment(ChatsFragment())
 
@@ -60,13 +72,15 @@ class HomeActivity : AppCompatActivity() {
 
                 R.id.nav_home -> replaceFragment(ChatsFragment())
                 R.id.nav_settings -> replaceFragment(SettingsFragment())
+                R.id.nav_profile -> startGo(ProfileActivity())
+                R.id.nav_github -> github()
                 R.id.sign_out -> signOut()
 
             }
             true
         }
 
-        binding.toolbarMain.setNavigationOnClickListener {
+        binding.materialToolbar.setNavigationOnClickListener {
 
             if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START)
@@ -85,6 +99,30 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        menuInflater.inflate(R.menu.menu, menu)
+        val item = menu?.findItem(R.id.search)
+        val searchView = item?.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+
+
+
+                return false
+
+            }
+
+        })
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         if (toggle.onOptionsItemSelected(item)){
@@ -94,6 +132,14 @@ class HomeActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun startGo(activity: Activity) {
+
+        val intent = Intent(this@HomeActivity,activity::class.java)
+        startActivity(intent)
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
+
     }
 
     private fun replaceFragment(fragment: Fragment){
@@ -113,8 +159,17 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
+    private fun github(){
+
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
+        val i = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/grigroviska"))
+        startActivity(i)
+
+    }
+
     private fun checkData(){
 
+        println(auId)
         try {
             dReference = FirebaseDatabase.getInstance().getReference("users")
             dReference.child(auId!!).get()
@@ -123,21 +178,18 @@ class HomeActivity : AppCompatActivity() {
                     nickName = it.child("name").value.toString()
                     phoneNumber = it.child("number").value.toString()
 
-                    val uPhoto = findViewById<CircleImageView>(R.id.nickPhoto)
-                    val uName = findViewById<TextView>(R.id.nickName)
-                    val uPhoneOrMail = findViewById<TextView>(R.id.phoneOrMail)
+                    Glide.with(this).load(url).into(nickPhoto)
 
-                    //Glide.with(this).load(url).into(uPhoto)
+                    user_name.text = nickName
+                    phoneOrMail.text = phoneNumber
 
-                    uName.text = nickName.toString()
-                    uPhoneOrMail.text = phoneNumber.toString()
                 }.addOnFailureListener {
                     Log.e("firebase", "Error getting data", it)
                 }
         }catch (e : Exception){
 
-            Toast.makeText(this, e.localizedMessage + e.message , Toast.LENGTH_LONG).show()
-            println(e.localizedMessage + e.message)
+            Toast.makeText(this, e.localizedMessage?.plus(e.message), Toast.LENGTH_LONG).show()
+            println(e.localizedMessage?.plus(e.message))
 
         }
 

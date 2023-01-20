@@ -68,7 +68,7 @@ class ChatActivity : AppCompatActivity() {
 
         binding.sendMessage.setOnClickListener {
 
-            if (binding.messageBox.text.isNotEmpty()) {
+            if (binding.messageBox.text.isNotEmpty() && binding.messageBox.text.toString().trim().isNotBlank()) {
 
                 val message =
                     MessageModel(binding.messageBox.text.toString(), senderUid, Date().time)

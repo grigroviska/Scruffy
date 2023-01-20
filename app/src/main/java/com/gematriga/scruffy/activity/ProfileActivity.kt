@@ -11,6 +11,7 @@ import com.gematriga.scruffy.model.UserModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.activity_profile.*
 import java.util.*
 
 class ProfileActivity : AppCompatActivity() {
@@ -26,6 +27,16 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setSupportActionBar(materialToolbar)
+        actionBar?.title = "Profile"
+
+        binding.materialToolbar.setNavigationOnClickListener {
+
+            onBackPressed()
+
+        }
+
 
         dialog = AlertDialog.Builder(this)
             .setMessage("Updating Profile..")

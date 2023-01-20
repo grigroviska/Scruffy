@@ -57,8 +57,6 @@ class ChatsFragment : Fragment() {
 
                 override fun onCancelled(error: DatabaseError) {
 
-
-
                 }
             })
 
