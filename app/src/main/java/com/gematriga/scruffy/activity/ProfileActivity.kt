@@ -23,17 +23,21 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var selectedImg : Uri
     private lateinit var dialog: AlertDialog.Builder
 
+    private var auId : String? = null
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setSupportActionBar(materialToolbar)
-        actionBar?.title = "Profile"
+        supportActionBar?.title = "Profile"
 
         binding.materialToolbar.setNavigationOnClickListener {
 
-            onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
 
         }
 
@@ -46,12 +50,15 @@ class ProfileActivity : AppCompatActivity() {
         storage = FirebaseStorage.getInstance()
         auth = FirebaseAuth.getInstance()
 
+        auId = auth.currentUser?.uid.toString()
+
         binding.userImage.setOnClickListener {
 
-            val intent = Intent()
-            intent.action = Intent.ACTION_GET_CONTENT
-            intent.type = "image/*"
-            startActivityForResult(intent, 1)
+            val imgUrIntent = Intent()
+            imgUrIntent.action = Intent.ACTION_GET_CONTENT
+            imgUrIntent.type = "image/*"
+            @Suppress("DEPRECATION")
+            startActivityForResult(imgUrIntent, 1)
 
         }
 
@@ -64,7 +71,7 @@ class ProfileActivity : AppCompatActivity() {
 
                     Toast.makeText(this,"Please Enter Your Name", Toast.LENGTH_LONG).show()
 
-                }else if (selectedImg == null){
+                }else if (selectedImg.equals("")){
 
                     Toast.makeText(this,"Please Select Your Image", Toast.LENGTH_LONG).show()
 
@@ -104,7 +111,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun uploadInfo(imgUrl: String) {
 
         val user = UserModel(auth.uid.toString(), binding.userName.text.toString(), auth.currentUser!!.phoneNumber.toString(), imgUrl)
-        println(imgUrl)
+
         database.reference.child("users")
             .child(auth.uid.toString())
             .setValue(user)
@@ -118,7 +125,9 @@ class ProfileActivity : AppCompatActivity() {
 
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        @Suppress("DEPRECATION")
         super.onActivityResult(requestCode, resultCode, data)
 
         if (data != null){
@@ -134,4 +143,5 @@ class ProfileActivity : AppCompatActivity() {
         }
 
     }
+
 }

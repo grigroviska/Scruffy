@@ -12,9 +12,13 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@drawable/scruffy_logo"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.Scruffy"
         tools:targetApi="31">
+        <activity
+            android:name=".activity.UpdateProfile"
+            android:exported="false" />
         <activity
             android:name=".activity.ChatActivity"
             android:exported="false">

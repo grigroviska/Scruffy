@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract.Profile
 import android.provider.LiveFolders.INTENT
 import android.util.Log
 import android.view.Menu
@@ -72,7 +73,7 @@ class HomeActivity : AppCompatActivity() {
 
                 R.id.nav_home -> replaceFragment(ChatsFragment())
                 R.id.nav_settings -> replaceFragment(SettingsFragment())
-                R.id.nav_profile -> startGo(ProfileActivity())
+                R.id.nav_profile -> startGo(UpdateProfile())
                 R.id.nav_github -> github()
                 R.id.sign_out -> signOut()
 
@@ -136,8 +137,8 @@ class HomeActivity : AppCompatActivity() {
 
     private fun startGo(activity: Activity) {
 
-        val intent = Intent(this@HomeActivity,activity::class.java)
-        startActivity(intent)
+        val goToPage = Intent(this@HomeActivity,activity::class.java)
+        startActivity(goToPage)
         binding.drawerLayout.closeDrawer(GravityCompat.START)
 
     }
@@ -169,7 +170,6 @@ class HomeActivity : AppCompatActivity() {
 
     private fun checkData(){
 
-        println(auId)
         try {
             dReference = FirebaseDatabase.getInstance().getReference("users")
             dReference.child(auId!!).get()

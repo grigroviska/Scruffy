@@ -189,6 +189,7 @@ class MainActivity : AppCompatActivity() {
     private fun sendToMain(){
 
         startActivity(Intent(this, HomeActivity::class.java))
+        finish()
 
     }
 
@@ -245,6 +246,7 @@ class MainActivity : AppCompatActivity() {
         if (auth.currentUser != null){
 
             startActivity(Intent(this@MainActivity, HomeActivity::class.java))
+            finish()
 
         }
 

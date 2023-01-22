@@ -1,20 +1,13 @@
 package com.gematriga.scruffy.activity
 
-import android.annotation.SuppressLint
-import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Message
 import android.util.Log
-import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
-import com.gematriga.scruffy.R
 import com.gematriga.scruffy.adapter.MessageAdapter
 import com.gematriga.scruffy.databinding.ActivityChatBinding
 import com.gematriga.scruffy.model.MessageModel
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -62,7 +55,7 @@ class ChatActivity : AppCompatActivity() {
 
         binding.backButton.setOnClickListener {
 
-            onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
 
         }
 
