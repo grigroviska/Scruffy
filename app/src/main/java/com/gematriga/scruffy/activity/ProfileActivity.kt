@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.gematriga.scruffy.R
 import com.gematriga.scruffy.databinding.ActivityProfileBinding
 import com.gematriga.scruffy.model.UserModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_profile.*
 import java.util.*
 
@@ -34,6 +36,8 @@ class ProfileActivity : AppCompatActivity() {
 
         setSupportActionBar(materialToolbar)
         supportActionBar?.title = "Profile"
+
+
 
         binding.materialToolbar.setNavigationOnClickListener {
 
@@ -110,7 +114,8 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun uploadInfo(imgUrl: String) {
 
-        val user = UserModel(auth.uid.toString(), binding.userName.text.toString(), auth.currentUser!!.phoneNumber.toString(), imgUrl)
+        val defaultBackgroundImage = "defaultCoverScruffy.jpeg"
+        val user = UserModel(auth.uid.toString(), binding.userName.text.toString(), auth.currentUser!!.phoneNumber.toString(), imgUrl, defaultBackgroundImage)
 
         database.reference.child("users")
             .child(auth.uid.toString())

@@ -17,12 +17,17 @@ import com.gematriga.scruffy.databinding.ActivityOtpactivityBinding
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.util.concurrent.TimeUnit
 
 class OTPActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityOtpactivityBinding
     private lateinit var auth : FirebaseAuth
+    private var auId : String? = null
 
     private lateinit var OTP : String
     private lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
@@ -45,7 +50,7 @@ class OTPActivity : AppCompatActivity() {
         resendToken = intent.getParcelableExtra("resendToken")!!
         phoneNumber = intent.getStringExtra("phoneNumber")!!
 
-        binding.verifyNumberText.text = "Verify Number  $phoneNumber"
+        binding.verifyNumberText.text = "${R.string.verifyYourPhone}  $phoneNumber"
 
         init()
         progressBar.visibility = View.INVISIBLE
@@ -127,9 +132,11 @@ class OTPActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
+
+                    auId = auth.currentUser!!.uid
                     progressBar.visibility = View.VISIBLE
                     Toast.makeText(this, "Authenticate Successfully", Toast.LENGTH_LONG).show()
-                    sendToMain()
+                    oldUser(auId.toString())
 
                 } else {
                     // Sign in failed, display a message and update the UI
@@ -143,10 +150,25 @@ class OTPActivity : AppCompatActivity() {
             }
     }
 
-    private fun sendToMain(){
+    private fun oldUser(olderUser : String){
 
-        startActivity(Intent(this, ProfileActivity::class.java))
-        finish()
+        val root = FirebaseDatabase.getInstance().reference
+        val users = root.child("users")
+        users.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.child(olderUser).exists()) {
+                    startActivity(Intent(this@OTPActivity, HomeActivity::class.java))
+                    finish()
+                } else {
+
+                    startActivity(Intent(this@OTPActivity, ProfileActivity::class.java))
+                    finish()
+
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {}
+        })
 
     }
 

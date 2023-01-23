@@ -3,8 +3,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="verifyNumberText">Verify Your Phone Number</string>
     <string name="verifyInfoText">We will send verification code on your number to verify.</string>
-    <string name="verifySendButton">Send OTP</string>
+    <string name="verifySendButton">Send Verification Code</string>
     <string name="typeYourNumber">Type Your Number</string>
+    <string name="verifyYourPhone">Verify Number</string>
     <string name="profileText">Profile Info</string>
     <string name="nameInput">Enter Your Name</string>
     <string name="continueButtonText">Continue</string>

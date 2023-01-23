@@ -5,13 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract.Profile
-import android.provider.LiveFolders.INTENT
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -20,10 +17,8 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.gematriga.scruffy.Fragments.ChatsFragment
 import com.gematriga.scruffy.Fragments.SettingsFragment
-import com.gematriga.scruffy.Fragments.StatusFragment
 import com.gematriga.scruffy.R
 import com.gematriga.scruffy.databinding.ActivityHomeBinding
-import com.google.android.material.internal.NavigationMenuItemView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -41,6 +36,7 @@ class HomeActivity : AppCompatActivity() {
     lateinit var toggle : ActionBarDrawerToggle
 
     var url : String? = null
+    var backgroundUrl : String? = null
     var nickName : String? = null
     var phoneNumber : String? = null
     var auId : String? = null
@@ -177,7 +173,10 @@ class HomeActivity : AppCompatActivity() {
                     url = it.child("imageUrl").value.toString()
                     nickName = it.child("name").value.toString()
                     phoneNumber = it.child("number").value.toString()
+                    backgroundUrl = it.child("backgroundUrl").value.toString()
 
+                    //getReferenceAndLoadNewBackground(backgroundUrl.toString())
+                    println(backgroundUrl)
                     Glide.with(this).load(url).into(nickPhoto)
 
                     user_name.text = nickName
@@ -195,5 +194,16 @@ class HomeActivity : AppCompatActivity() {
 
 
     }
+
+    /*private fun getReferenceAndLoadNewBackground(backgroundShortTitle: String) {
+        val storageReference = FirebaseStorage.getInstance().reference.child("BackgroundCover").child(
+            "$backgroundShortTitle.jpeg"
+        )
+        storageReference.downloadUrl
+            .addOnSuccessListener { Glide.with(this).load(it).into(nickPhoto)
+                println(it)
+                println(storageReference)
+            }
+    }*/
 
 }
