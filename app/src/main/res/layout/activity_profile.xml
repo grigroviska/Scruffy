@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ProfileActivity">
+    tools:context=".activity.ProfileActivity"
+    >
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/materialToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/softBlue"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@color/white"
         app:navigationIcon="@drawable/scruffy_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,17 +29,18 @@
         android:id="@+id/userImage"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:src="@drawable/scruffy_logo"
+        android:src="@drawable/scruffy_profile"
+
         />
 
     <TextView
         android:id="@+id/profileInfoText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:layout_marginTop="16dp"
         android:text="@string/profileText"
         android:textSize="18sp"
-        android:textColor="@color/black"
         android:textStyle="bold"
         />
 
@@ -45,10 +48,10 @@
         android:id="@+id/editNameAndPhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:layout_marginTop="16dp"
         android:text="@string/editNameAndImage"
         android:textSize="16sp"
-        android:textColor="@color/black"
         />
 
     <com.google.android.material.textfield.TextInputLayout

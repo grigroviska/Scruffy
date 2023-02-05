@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
+    android:padding="20dp"
     tools:context=".activity.MainActivity">
 
-    <ImageView
+    <pl.droidsonroids.gif.GifImageView
         android:id="@+id/headImage"
-        android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:src="@drawable/sign_in_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        android:src="@drawable/sign_up_animate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -70,19 +70,21 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     app:ccp_autoDetectCountry="true"
-                    app:ccpDialog_textColor="@color/white"
-                    app:ccp_contentColor="@color/white"
+                    app:ccpDialog_textColor="@color/black"
+                    app:ccp_contentColor="@color/backgroundColor"
                     app:ccp_showNameCode="false"
-                    tools:ccp_textSize="20dp"
+                    tools:ccp_textSize="20sp"
                     tools:layout_editor_absoluteY="369dp" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/phoneEditTextNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="20sp"
                     android:layout_gravity="right"
                     android:hint="@string/typeYourNumber"
-                    android:inputType="phone" />
+                    android:inputType="phone"
+                    />
 
         </LinearLayout>
 

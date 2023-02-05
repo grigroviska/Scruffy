@@ -8,9 +8,20 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="colorPrimary">#128C7E</color>
-    <color name="colorPrimaryDark">#075E54</color>
+    <color name="colorPrimary">@color/firstColor</color>
+    <color name="colorPrimaryDark">@color/firstColor</color>
     <color name="ascent">#25D366</color>
-    <color name="softBlue">#14a7d0</color>
+    <color name="softBlue">#408BA1</color>
+    <color name="receiver_message">#444444</color>
+
+
+    <color name="night_mode">#736CED</color>
+    <color name="cover_mode">#547AA5</color>
+    <color name="main_theme_text">#4F9185</color>
+    <color name="main_theme_font">#904E55</color>
+    <color name="chat_background">#CF8185</color>
+
+    <color name="backgroundColor">#222222</color>
+    <color name="firstColor">#547AA5</color>
 
 </resources>

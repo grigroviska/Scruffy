@@ -3,37 +3,38 @@ package com.gematriga.scruffy.activity
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.SearchView
+import android.view.View
+import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.gematriga.scruffy.Fragments.ChatsFragment
-import com.gematriga.scruffy.Fragments.SettingsFragment
 import com.gematriga.scruffy.R
+import com.gematriga.scruffy.adapter.ChatAdapter
 import com.gematriga.scruffy.databinding.ActivityHomeBinding
+import com.gematriga.scruffy.model.UserModel
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.nav_header.*
+import java.util.*
 
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding : ActivityHomeBinding
     private lateinit var auth : FirebaseAuth
     private lateinit var dReference : DatabaseReference
+    private var database : FirebaseDatabase? = null
     lateinit var toggle : ActionBarDrawerToggle
+    lateinit var userList : ArrayList<UserModel>
 
     var url : String? = null
     var backgroundUrl : String? = null
@@ -48,13 +49,16 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.materialToolbar)
 
+
         auth = FirebaseAuth.getInstance()
         dReference = Firebase.database.reference
         auId = auth.currentUser?.uid.toString()
+        database = FirebaseDatabase.getInstance()
+        userList = ArrayList()
 
         checkData()
 
-        replaceFragment(ChatsFragment())
+        //replaceFragment(ChatsFragment())
 
         var drawerLayout : DrawerLayout = findViewById(R.id.drawerLayout)
         val navView : NavigationView = binding.navView
@@ -67,8 +71,8 @@ class HomeActivity : AppCompatActivity() {
 
             when(it.itemId){
 
-                R.id.nav_home -> replaceFragment(ChatsFragment())
-                R.id.nav_settings -> replaceFragment(SettingsFragment())
+                //R.id.nav_home -> replaceFragment(ChatsFragment())
+                R.id.nav_settings -> startGo(SettingsActivity())
                 R.id.nav_profile -> startGo(UpdateProfile())
                 R.id.nav_github -> github()
                 R.id.sign_out -> signOut()
@@ -94,6 +98,8 @@ class HomeActivity : AppCompatActivity() {
 
         }
 
+        checkDataRecycler()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -107,9 +113,30 @@ class HomeActivity : AppCompatActivity() {
                 return false
             }
 
-            override fun onQueryTextChange(p0: String?): Boolean {
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                database!!.reference.child("users")
+                    .addValueEventListener(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            userList.clear()
+                            for (snapshot1 in snapshot.children){
+
+                                val user = snapshot1.getValue(UserModel::class.java)
+                                if(user!!.uid !=FirebaseAuth.getInstance().uid && user!!.name!!.toLowerCase(Locale.getDefault()).contains(newText.toString())){
+                                        userList.add(user)
+                                }
+
+                            }
+                            binding.userListRecyclerView.adapter = ChatAdapter(this@HomeActivity , userList)
 
 
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            userList.clear()
+                            checkDataRecycler()
+                        }
+                    })
 
                 return false
 
@@ -118,6 +145,37 @@ class HomeActivity : AppCompatActivity() {
         })
 
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun checkDataRecycler(){
+
+        database!!.reference.child("users")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+
+                    userList.clear()
+                    for (snapshot1 in snapshot.children){
+
+                        val user = snapshot1.getValue(UserModel::class.java)
+                        if (user!!.uid !=FirebaseAuth.getInstance().uid){
+
+                            userList.add(user)
+
+                        }
+
+                    }
+
+                    binding.userListRecyclerView.adapter = ChatAdapter(this@HomeActivity , userList)
+
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            })
+
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -138,7 +196,7 @@ class HomeActivity : AppCompatActivity() {
         binding.drawerLayout.closeDrawer(GravityCompat.START)
 
     }
-
+    /*
     private fun replaceFragment(fragment: Fragment){
 
         val fragmentManager = supportFragmentManager
@@ -146,7 +204,7 @@ class HomeActivity : AppCompatActivity() {
         fragmentTransaction.replace(R.id.fragmentContainerView, fragment)
         fragmentTransaction.commit()
         binding.drawerLayout.closeDrawer(GravityCompat.START)
-    }
+    }*/
 
     private fun signOut(){
 
@@ -194,6 +252,8 @@ class HomeActivity : AppCompatActivity() {
 
 
     }
+
+
 
     /*private fun getReferenceAndLoadNewBackground(backgroundShortTitle: String) {
         val storageReference = FirebaseStorage.getInstance().reference.child("BackgroundCover").child(

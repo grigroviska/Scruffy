@@ -6,7 +6,7 @@
         android:id="@+id/search"
         android:title="Search"
         android:icon="@drawable/scruffy_search"
-        app:actionViewClass="android.widget.SearchView"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="ifRoom|collapseActionView"/>
 
 </menu>

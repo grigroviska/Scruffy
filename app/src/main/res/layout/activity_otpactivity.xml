@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.OTPActivity">
+    tools:context=".activity.OTPActivity"
+    >
 
-    <ImageView
+    <pl.droidsonroids.gif.GifImageView
         android:id="@+id/headImageOTP"
         android:layout_width="match_parent"
         android:layout_height="230dp"
-        android:src="@drawable/simpson"
+        android:src="@drawable/verification_code"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

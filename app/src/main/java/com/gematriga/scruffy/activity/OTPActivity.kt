@@ -1,5 +1,8 @@
+@file:Suppress("DEPRECATION")
+
 package com.gematriga.scruffy.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -41,6 +44,7 @@ class OTPActivity : AppCompatActivity() {
     private lateinit var inputOTP5 : EditText
     private lateinit var inputOTP6 : EditText
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOtpactivityBinding.inflate(layoutInflater)
@@ -105,7 +109,7 @@ class OTPActivity : AppCompatActivity() {
         binding.resendTextView.visibility = View.INVISIBLE
         binding.resendTextView.isEnabled = false
 
-        Handler(Looper.myLooper()!!).postDelayed(Runnable {
+        Handler(Looper.myLooper()!!).postDelayed({
 
             binding.resendTextView.visibility = View.VISIBLE
             binding.resendTextView.isEnabled = true
@@ -142,7 +146,7 @@ class OTPActivity : AppCompatActivity() {
                     // Sign in failed, display a message and update the UI
                     Log.d("TAG","signInWithPhoneAuthCredential: ${task.exception.toString()}")
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                        // The verification code entered was invalid
+                        Toast.makeText(this, "Please enter the verification code correctly!", Toast.LENGTH_LONG).show()
                     }
                     // Update UI
                 }
