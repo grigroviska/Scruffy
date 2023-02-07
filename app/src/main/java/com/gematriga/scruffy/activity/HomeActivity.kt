@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -40,7 +39,7 @@ class HomeActivity : AppCompatActivity() {
     var backgroundUrl : String? = null
     var nickName : String? = null
     var phoneNumber : String? = null
-    var auId : String? = null
+    var currentId : String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,10 +48,9 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.materialToolbar)
 
-
         auth = FirebaseAuth.getInstance()
         dReference = Firebase.database.reference
-        auId = auth.currentUser?.uid.toString()
+        currentId = auth.currentUser?.uid.toString()
         database = FirebaseDatabase.getInstance()
         userList = ArrayList()
 
@@ -60,6 +58,12 @@ class HomeActivity : AppCompatActivity() {
 
         //replaceFragment(ChatsFragment())
 
+        //Commands that evaluate online status
+        database!!.reference.child("Presence")
+            .child(currentId!!)
+            .setValue("Online")
+
+        //Slidable menu
         var drawerLayout : DrawerLayout = findViewById(R.id.drawerLayout)
         val navView : NavigationView = binding.navView
 
@@ -91,17 +95,10 @@ class HomeActivity : AppCompatActivity() {
 
         }
 
-        if(auth.currentUser == null){
-
-            startActivity(Intent(this,MainActivity::class.java))
-            finish()
-
-        }
-
         checkDataRecycler()
 
     }
-
+    //User search box codes
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
         menuInflater.inflate(R.menu.menu, menu)
@@ -146,7 +143,7 @@ class HomeActivity : AppCompatActivity() {
 
         return super.onCreateOptionsMenu(menu)
     }
-
+    //Checking Latest Data
     private fun checkDataRecycler(){
 
         database!!.reference.child("users")
@@ -189,6 +186,7 @@ class HomeActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    //Lines leading to activities
     private fun startGo(activity: Activity) {
 
         val goToPage = Intent(this@HomeActivity,activity::class.java)
@@ -226,7 +224,7 @@ class HomeActivity : AppCompatActivity() {
 
         try {
             dReference = FirebaseDatabase.getInstance().getReference("users")
-            dReference.child(auId!!).get()
+            dReference.child(currentId!!).get()
                 .addOnSuccessListener {
                     url = it.child("imageUrl").value.toString()
                     nickName = it.child("name").value.toString()
@@ -252,8 +250,40 @@ class HomeActivity : AppCompatActivity() {
 
 
     }
+    //Commands that evaluate online status
+    override fun onResume() {
+        super.onResume()
 
+        database!!.reference.child("Presence")
+            .child(currentId!!)
+            .setValue("Online")
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        database!!.reference.child("Presence")
+            .child(currentId!!)
+            .setValue("Offline")
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        database!!.reference.child("Presence")
+            .child(currentId!!)
+            .setValue("Offline")
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        database!!.reference.child("Presence")
+            .child(currentId!!)
+            .setValue("Offline")
+    }
 
     /*private fun getReferenceAndLoadNewBackground(backgroundShortTitle: String) {
         val storageReference = FirebaseStorage.getInstance().reference.child("BackgroundCover").child(

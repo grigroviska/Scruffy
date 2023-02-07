@@ -30,7 +30,7 @@ class UpdateProfile : AppCompatActivity() {
     private var nickName : String? = null
     private var phoneNumber : String? = null
 
-    private var auId : String? = null
+    private var currentId : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +43,12 @@ class UpdateProfile : AppCompatActivity() {
         storage = FirebaseStorage.getInstance()
         auth = FirebaseAuth.getInstance()
 
-        auId = auth.currentUser?.uid.toString()
+        currentId = auth.currentUser?.uid.toString()
+
+        //Commands that evaluate online status
+        database!!.reference.child("Presence")
+            .child(currentId!!)
+            .setValue("Online")
 
         checkData()
 
@@ -198,7 +203,7 @@ class UpdateProfile : AppCompatActivity() {
 
         try {
             dReference = FirebaseDatabase.getInstance().getReference("users")
-            dReference.child(auId!!).get()
+            dReference.child(currentId!!).get()
                 .addOnSuccessListener {
                     url = it.child("imageUrl").value.toString()
                     nickName = it.child("name").value.toString()
@@ -222,6 +227,47 @@ class UpdateProfile : AppCompatActivity() {
         }
 
 
+    }
+
+    //Commands that evaluate online status
+    override fun onResume() {
+        super.onResume()
+
+        database!!.reference.child("Presence")
+            .child(currentId!!)
+            .setValue("Online")
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        val currentId = FirebaseAuth.getInstance().uid
+
+        database!!.reference.child("Presence")
+            .child(currentId!!)
+            .setValue("Offline")
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        val currentId = FirebaseAuth.getInstance().uid
+
+        database!!.reference.child("Presence")
+            .child(currentId!!)
+            .setValue("Offline")
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        val currentId = FirebaseAuth.getInstance().uid
+
+        database!!.reference.child("Presence")
+            .child(currentId!!)
+            .setValue("Offline")
     }
 
 }

@@ -6,13 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.gematriga.scruffy.R
 import com.gematriga.scruffy.databinding.ActivityProfileBinding
 import com.gematriga.scruffy.model.UserModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
-import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_profile.*
 import java.util.*
 
@@ -25,7 +23,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var selectedImg : Uri
     private lateinit var dialog: AlertDialog.Builder
 
-    private var auId : String? = null
+    private var currentId : String? = null
 
 
 
@@ -53,8 +51,6 @@ class ProfileActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance()
         storage = FirebaseStorage.getInstance()
         auth = FirebaseAuth.getInstance()
-
-        auId = auth.currentUser?.uid.toString()
 
         binding.userImage.setOnClickListener {
 
@@ -148,5 +144,6 @@ class ProfileActivity : AppCompatActivity() {
         }
 
     }
+
 
 }

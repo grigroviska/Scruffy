@@ -4,7 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.gematriga.scruffy.R
 import com.gematriga.scruffy.databinding.ReceiverLayoutItemBinding
 import com.gematriga.scruffy.databinding.SendItemLayoutBinding
@@ -32,11 +34,40 @@ class MessageAdapter(var context : Context, var list : ArrayList<MessageModel>) 
         if (holder.itemViewType == ITEM_SENT){
 
             val viewHolder = holder as SentViewHolder
+
+            if(message.message.equals("photo")){
+
+                viewHolder.binding.image.visibility = View.VISIBLE
+                viewHolder.binding.pLinear.visibility = View.VISIBLE
+                viewHolder.binding.userMsg.visibility = View.GONE
+                viewHolder.binding.mLinear.visibility = View.GONE
+                Glide.with(context)
+                    .load(message.imageUrl)
+                    .placeholder(R.drawable.simpson)
+                    .into(viewHolder.binding.image)
+
+            }
             viewHolder.binding.userMsg.text = message.message
+
 
         }else{
 
             val viewHolder = holder as ReceiverViewHolder
+
+            if(message.message.equals("photo")){
+
+                viewHolder.binding.image.visibility = View.VISIBLE
+                viewHolder.binding.pLinear.visibility = View.VISIBLE
+                viewHolder.binding.pdateMsg.visibility = View.VISIBLE
+                viewHolder.binding.pdateMsg.text = message.timeStamp.toString()
+                viewHolder.binding.userMsg.visibility = View.GONE
+                viewHolder.binding.mLinear.visibility = View.GONE
+                Glide.with(context)
+                    .load(message.imageUrl)
+                    .placeholder(R.drawable.simpson)
+                    .into(viewHolder.binding.image)
+
+            }
             viewHolder.binding.userMsg.text = message.message
 
         }

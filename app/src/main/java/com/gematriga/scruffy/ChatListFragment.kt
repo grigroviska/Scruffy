@@ -8,22 +8,20 @@ import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
 import com.gematriga.scruffy.databinding.FragmentFeedBinding
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class ChatListFragment : Fragment() {
 
     private lateinit var viewPager: ViewPager
     private lateinit var tabLayout: TabLayout
+    private lateinit var database : FirebaseDatabase
     private lateinit var _binding: FragmentFeedBinding
     private val binding get() = _binding
     override fun onCreate(savedInstanceState: Bundle?) {
-        initViewPAger()
         super.onCreate(savedInstanceState)
     }
 
-    private fun initViewPAger() {
-
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,8 +29,13 @@ class ChatListFragment : Fragment() {
     ): View {
         _binding = FragmentFeedBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        database = FirebaseDatabase.getInstance()
+
         return view
     }
+
+
 
 
 }
