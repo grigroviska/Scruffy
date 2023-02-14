@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.UpdateProfile">
+    tools:context=".activity.UpdateProfile"
+    android:background="@color/dark_white_mode">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/materialToolbar"
@@ -72,7 +73,7 @@
         android:layout_marginTop="10dp"
         android:visibility="visible"
         android:text="Bart Simpson"
-        android:textColor="@color/black"
+        android:textColor="@color/textThemeColor"
         android:textSize="22dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/profileImageView"
@@ -83,7 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Bart Simpson"
-        android:textColor="@color/black"
+        android:textColor="@color/textThemeColor"
         android:textSize="22dp"
         android:textStyle="bold"
         android:visibility="invisible"
@@ -96,6 +97,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:visibility="visible"
+        android:textColor="@color/textThemeColor"
         android:text="PhoneNumber"
         android:textSize="16dp"
         app:layout_constraintStart_toStartOf="@+id/userNameProfile"
@@ -117,7 +119,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="10dp"
-        android:background="@color/black"
+        android:background="@color/textThemeColor"
         app:layout_constraintTop_toBottomOf="@+id/phoneNumberProfile" />
 
 

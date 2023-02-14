@@ -1,15 +1,21 @@
 package com.gematriga.scruffy.activity
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.graphics.drawable.toDrawable
+import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.gematriga.scruffy.adapter.MessageAdapter
 import com.gematriga.scruffy.databinding.ActivityChatBinding
@@ -21,6 +27,8 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.activity_chat.*
+import kotlinx.android.synthetic.main.send_item_layout.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -30,6 +38,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var database : FirebaseDatabase
     private lateinit var dReference : DatabaseReference
     private lateinit var storage : FirebaseStorage
+    lateinit var sharedPreferences: SharedPreferences
 
     private lateinit var senderUid : String
     private lateinit var receiverUid : String
@@ -65,7 +74,33 @@ class ChatActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance()
         storage = FirebaseStorage.getInstance()
 
+        val appSettingPrefs : SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
+        val isNightModeOn : Boolean = appSettingPrefs.getBoolean("NightMode",false)
+
+        if (isNightModeOn){
+
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
+
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+        }
+
         checkData()
+
+        sharedPreferences = this.getSharedPreferences("com.gematriga.scruffy.settings.background",
+            Context.MODE_PRIVATE)
+
+        val backgroundFromPreferences = sharedPreferences.getString("background", null)
+
+        if (backgroundFromPreferences != null){
+
+            val backgroundExchangeUri = backgroundFromPreferences.toInt()
+
+            chatActivityLayout.setBackgroundResource(backgroundExchangeUri)
+
+        }
 
         binding.backButton.setOnClickListener {
 
@@ -117,7 +152,7 @@ class ChatActivity : AppCompatActivity() {
             if (binding.messageBox.text.isNotEmpty() && binding.messageBox.text.toString().trim().isNotBlank()) {
 
                 val message =
-                    MessageModel(binding.messageBox.text.toString(), senderUid, Date().time)
+                    MessageModel(binding.messageBox.text.toString(), senderUid, Date().time,null,null)
 
                 val randomKey = database.reference.push().key
 
@@ -133,9 +168,31 @@ class ChatActivity : AppCompatActivity() {
                             }
 
                     }
+            }else if(!Patterns.WEB_URL.matcher(binding.messageBox.toString()).matches()){
+
+                val message =
+                    MessageModel(binding.messageBox.text.toString(), senderUid, Date().time,null,"link")
+
+                val randomKey = database.reference.push().key
+
+                database.reference.child("chats")
+                    .child(senderRoom).child("message").child(randomKey!!).setValue(message)
+                    .addOnSuccessListener {
+
+                        database.reference.child("chats").child(receiverRoom).child("message")
+                            .child(randomKey!!).setValue(message).addOnSuccessListener {
+
+                                binding.messageBox.text = null
+
+                            }
+
+                    }
+
             }
 
         }
+
+
 
         database!!.reference.child("Presence").child(receiverUid!!)
             .addValueEventListener(object : ValueEventListener{
@@ -213,7 +270,7 @@ class ChatActivity : AppCompatActivity() {
                                         val filePath = uri.toString()
 
                                             val message =
-                                                MessageModel("photo", senderUid, Date().time, filePath)
+                                                MessageModel(null, senderUid, Date().time, filePath, "photo")
 
                                             val randomKey = database.reference.push().key
 
@@ -246,6 +303,15 @@ class ChatActivity : AppCompatActivity() {
 
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        super.onStart()
+
+        database!!.reference.child("Presence")
+            .child(senderUid!!)
+            .setValue("Online")
+    }
+
     override fun onResume() {
         super.onResume()
 
@@ -255,23 +321,7 @@ class ChatActivity : AppCompatActivity() {
 
     }
 
-    override fun onPause() {
-        super.onPause()
-
-        database!!.reference.child("Presence")
-            .child(senderUid!!)
-            .setValue("Offline")
-    }
-
-    override fun onStop() {
-        super.onStop()
-
-        database!!.reference.child("Presence")
-            .child(senderUid!!)
-            .setValue("Offline")
-
-    }
-
+/*
     override fun onDestroy() {
         super.onDestroy()
 
@@ -279,7 +329,7 @@ class ChatActivity : AppCompatActivity() {
             .child(senderUid!!)
             .setValue("Offline")
     }
-
+*/
     private fun checkData(){
 
         dReference = FirebaseDatabase.getInstance().getReference("users")

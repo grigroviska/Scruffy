@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    tools:context=".activity.MainActivity">
+    tools:context=".activity.MainActivity"
+    android:background="@color/dark_white_mode">
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/headImage"
@@ -22,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="20dp"
+        android:textColor="@color/textThemeColor"
         android:text="@string/verifyNumberText"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -33,6 +35,7 @@
         android:id="@+id/verifyInfoText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/textThemeColor"
         android:layout_marginTop="5dp"
         android:text="@string/verifyInfoText"
         android:textSize="12sp"
@@ -70,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     app:ccp_autoDetectCountry="true"
-                    app:ccpDialog_textColor="@color/black"
+                    app:ccpDialog_textColor="@color/textThemeColor"
                     app:ccp_contentColor="@color/backgroundColor"
                     app:ccp_showNameCode="false"
                     tools:ccp_textSize="20sp"
@@ -80,6 +83,8 @@
                     android:id="@+id/phoneEditTextNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/textThemeColor"
+                    android:textColorHint="@color/textThemeColor"
                     android:textSize="20sp"
                     android:layout_gravity="right"
                     android:hint="@string/typeYourNumber"

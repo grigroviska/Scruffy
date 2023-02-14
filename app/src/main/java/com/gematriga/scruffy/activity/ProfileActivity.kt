@@ -1,11 +1,13 @@
 package com.gematriga.scruffy.activity
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
 import com.gematriga.scruffy.databinding.ActivityProfileBinding
 import com.gematriga.scruffy.model.UserModel
 import com.google.firebase.auth.FirebaseAuth
@@ -23,8 +25,6 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var selectedImg : Uri
     private lateinit var dialog: AlertDialog.Builder
 
-    private var currentId : String? = null
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +35,18 @@ class ProfileActivity : AppCompatActivity() {
         setSupportActionBar(materialToolbar)
         supportActionBar?.title = "Profile"
 
+        val appSettingPrefs : SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
+        val isNightModeOn : Boolean = appSettingPrefs.getBoolean("NightMode",false)
 
+        if (isNightModeOn){
+
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
+
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+        }
 
         binding.materialToolbar.setNavigationOnClickListener {
 

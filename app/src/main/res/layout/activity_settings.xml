@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.SettingsActivity">
+    tools:context=".activity.SettingsActivity"
+    android:background="@color/dark_white_mode">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/primaryThemeColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -18,7 +20,7 @@
             android:id="@+id/materialToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
+            android:background="@color/primaryThemeColor"
             app:navigationIcon="@drawable/scruffy_back"
             app:titleTextColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
@@ -96,6 +98,7 @@
                         />
 
                     <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/nightModeSwitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -223,6 +226,7 @@
                     />
 
                 <RelativeLayout
+                    android:id="@+id/selectBackground"
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">

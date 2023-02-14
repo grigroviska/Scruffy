@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.ProfileActivity"
+    android:background="@color/dark_white_mode"
     >
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/materialToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/primaryThemeColor"
         app:titleTextColor="@color/white"
         app:navigationIcon="@drawable/scruffy_back"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +38,7 @@
         android:id="@+id/profileInfoText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="@color/textThemeColor"
         android:layout_marginTop="16dp"
         android:text="@string/profileText"
         android:textSize="18sp"
@@ -48,7 +49,7 @@
         android:id="@+id/editNameAndPhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="@color/textThemeColor"
         android:layout_marginTop="16dp"
         android:text="@string/editNameAndImage"
         android:textSize="16sp"
@@ -71,6 +72,7 @@
         android:id="@+id/continueButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cornerRadius="20dp"
         android:text="@string/continueButtonText"
         android:layout_marginTop="18dp"/>
     </LinearLayout>

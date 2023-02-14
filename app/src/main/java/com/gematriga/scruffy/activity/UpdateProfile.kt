@@ -1,12 +1,14 @@
 package com.gematriga.scruffy.activity
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.bumptech.glide.Glide
 import com.gematriga.scruffy.databinding.ActivityUpdateProfileBinding
 import com.gematriga.scruffy.model.UserModel
@@ -39,6 +41,19 @@ class UpdateProfile : AppCompatActivity() {
 
         setSupportActionBar(binding.materialToolbar)
 
+        val appSettingPrefs : SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
+        val isNightModeOn : Boolean = appSettingPrefs.getBoolean("NightMode",false)
+
+        if (isNightModeOn){
+
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
+
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+        }
+
         database = FirebaseDatabase.getInstance()
         storage = FirebaseStorage.getInstance()
         auth = FirebaseAuth.getInstance()
@@ -55,6 +70,7 @@ class UpdateProfile : AppCompatActivity() {
         binding.materialToolbar.setNavigationOnClickListener {
 
             onBackPressedDispatcher.onBackPressed()
+
 
         }
 
@@ -96,15 +112,12 @@ class UpdateProfile : AppCompatActivity() {
                     println(nickName)
                     if (binding.changeUserName.text.toString() == nickName && selectedImg == null ){
 
-                        Toast.makeText(this,"Please Enter Something", Toast.LENGTH_LONG).show()
 
                     }else if ((binding.changeUserName.text.toString() != nickName || selectedImg != null) || (binding.changeUserName.text.toString() != nickName && selectedImg != null)) {
                         if (selectedImg != null) {
-                            println(2)
                             uploadData()
                         } else {
                             if (binding.changeUserName.text.toString() != nickName) {
-                                println(3)
                                 uploadTextInfo()
                             }
                         }
@@ -113,7 +126,6 @@ class UpdateProfile : AppCompatActivity() {
 
                 }catch (e: Exception){
 
-                    Toast.makeText(this,"111111",Toast.LENGTH_LONG).show()
                     Toast.makeText(this,e.localizedMessage,Toast.LENGTH_LONG).show()
                 }
 
@@ -230,33 +242,21 @@ class UpdateProfile : AppCompatActivity() {
     }
 
     //Commands that evaluate online status
+    override fun onRestart() {
+        super.onRestart()
+        super.onStart()
+
+        database!!.reference.child("Presence")
+            .child(currentId!!)
+            .setValue("Online")
+    }
+
     override fun onResume() {
         super.onResume()
 
         database!!.reference.child("Presence")
             .child(currentId!!)
             .setValue("Online")
-
-    }
-
-    override fun onPause() {
-        super.onPause()
-
-        val currentId = FirebaseAuth.getInstance().uid
-
-        database!!.reference.child("Presence")
-            .child(currentId!!)
-            .setValue("Offline")
-    }
-
-    override fun onStop() {
-        super.onStop()
-
-        val currentId = FirebaseAuth.getInstance().uid
-
-        database!!.reference.child("Presence")
-            .child(currentId!!)
-            .setValue("Offline")
 
     }
 

@@ -4,6 +4,7 @@ package com.gematriga.scruffy.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -15,6 +16,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import com.gematriga.scruffy.R
 import com.gematriga.scruffy.databinding.ActivityOtpactivityBinding
 import com.google.firebase.FirebaseException
@@ -55,6 +57,19 @@ class OTPActivity : AppCompatActivity() {
         phoneNumber = intent.getStringExtra("phoneNumber")!!
 
         binding.verifyNumberText.text = "${R.string.verifyYourPhone}  $phoneNumber"
+
+        val appSettingPrefs : SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
+        val isNightModeOn : Boolean = appSettingPrefs.getBoolean("NightMode",false)
+
+        if (isNightModeOn){
+
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
+
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+        }
 
         init()
         progressBar.visibility = View.INVISIBLE

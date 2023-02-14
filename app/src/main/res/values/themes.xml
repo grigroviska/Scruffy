@@ -3,37 +3,23 @@
     <style name="Theme.Scruffy" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/firstColor</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryVariant">@color/firstColor</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/colorPrimary</item>
-        <item name="colorSecondaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorSecondary">@color/firstColor</item>
+        <item name="colorSecondaryVariant">@color/firstColor</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@color/firstColor</item>
         <!-- Customize your theme here. -->
     </style>
 
     <style name="nightModeSwitch" parent="Theme.AppCompat.Light">
-        <item name="colorControlActivated">@color/night_mode</item>
+        <item name="colorControlActivated">#9590E3</item>
         <item name="colorSwitchThumbNormal">#FFF</item>
         <item name="android:colorForeground">#99FFFFFF</item>
     </style>
-    
-    <style name="SCREEN">
 
-        <item name="android:background">@color/backgroundColor</item>
-        <item name="android:textColor">@color/white</item>
-
-    </style>
-
-
-    <style name="BUTTON">
-
-        <item name="android:background">@color/firstColor</item>
-        <item name="android:textColor">@color/white</item>
-
-    </style>
 
 
 </resources>

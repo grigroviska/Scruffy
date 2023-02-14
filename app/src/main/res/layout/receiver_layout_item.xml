@@ -7,9 +7,8 @@
     android:gravity="start"
     android:layout_gravity="start"
     android:padding="8dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <LinearLayout
         android:id="@+id/mLinear"
@@ -33,9 +32,13 @@
                 android:text="Hi, how r u?"
                 android:textColor="@color/white"
                 android:textSize="16sp"
+                android:autoLink="web"
+                android:textColorLink="@color/chat_link_color_receiver"
+                android:linksClickable="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="InvalidId" />
+                tools:ignore="InvalidId"
+                />
 
         </LinearLayout>
 

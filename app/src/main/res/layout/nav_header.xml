@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1b1b1b"
-    >
+    android:background="@color/dark_white_mode"
+    android:textColor="@color/textThemeColor">
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gifImageView2"
         android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_height="185dp"
         android:src="@drawable/profile_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

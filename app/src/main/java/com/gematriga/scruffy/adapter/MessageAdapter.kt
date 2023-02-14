@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gematriga.scruffy.R
@@ -12,6 +12,7 @@ import com.gematriga.scruffy.databinding.ReceiverLayoutItemBinding
 import com.gematriga.scruffy.databinding.SendItemLayoutBinding
 import com.gematriga.scruffy.model.MessageModel
 import com.google.firebase.auth.FirebaseAuth
+
 
 class MessageAdapter(var context : Context, var list : ArrayList<MessageModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -35,7 +36,7 @@ class MessageAdapter(var context : Context, var list : ArrayList<MessageModel>) 
 
             val viewHolder = holder as SentViewHolder
 
-            if(message.message.equals("photo")){
+            if(message.messageType.equals("photo")){
 
                 viewHolder.binding.image.visibility = View.VISIBLE
                 viewHolder.binding.pLinear.visibility = View.VISIBLE
@@ -46,6 +47,13 @@ class MessageAdapter(var context : Context, var list : ArrayList<MessageModel>) 
                     .placeholder(R.drawable.simpson)
                     .into(viewHolder.binding.image)
 
+            }else if (message.messageType.equals("link")){
+
+                viewHolder.binding.userMsg.linkTextColors.defaultColor
+                viewHolder.binding.userMsg.linksClickable
+                viewHolder.binding.userMsg.text = message.message
+
+
             }
             viewHolder.binding.userMsg.text = message.message
 
@@ -54,7 +62,7 @@ class MessageAdapter(var context : Context, var list : ArrayList<MessageModel>) 
 
             val viewHolder = holder as ReceiverViewHolder
 
-            if(message.message.equals("photo")){
+            if(message.messageType.equals("photo")){
 
                 viewHolder.binding.image.visibility = View.VISIBLE
                 viewHolder.binding.pLinear.visibility = View.VISIBLE
@@ -66,6 +74,13 @@ class MessageAdapter(var context : Context, var list : ArrayList<MessageModel>) 
                     .load(message.imageUrl)
                     .placeholder(R.drawable.simpson)
                     .into(viewHolder.binding.image)
+
+            }else if (message.messageType.equals("link")){
+
+                viewHolder.binding.userMsg.linkTextColors.defaultColor
+                viewHolder.binding.userMsg.linksClickable
+                viewHolder.binding.userMsg.text = message.message
+
 
             }
             viewHolder.binding.userMsg.text = message.message

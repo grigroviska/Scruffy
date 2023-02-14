@@ -1,11 +1,21 @@
 package com.gematriga.scruffy.activity
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
+import com.gematriga.scruffy.R
 import com.gematriga.scruffy.databinding.ActivityHomeBinding
 import com.gematriga.scruffy.databinding.ActivitySettingsBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.activity_settings.*
+import kotlinx.android.synthetic.main.selectbackground.*
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -13,6 +23,8 @@ class SettingsActivity : AppCompatActivity() {
     private var database : FirebaseDatabase? = null
 
     private var currentId : String? = null
+    private var selectedImg : Uri? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +45,104 @@ class SettingsActivity : AppCompatActivity() {
 
         }
 
+        val appSettingPrefs : SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
+        val sharedPrefsEdit : SharedPreferences.Editor = appSettingPrefs.edit()
+        val isNightModeOn : Boolean = appSettingPrefs.getBoolean("NightMode",false)
+
+        if (isNightModeOn){
+
+            binding.nightModeSwitch.isChecked = true
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
+
+        }else{
+            binding.nightModeSwitch.isSelected = false
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+        }
+
+        binding.nightModeSwitch.setOnClickListener {
+
+            if(isNightModeOn){
+
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                sharedPrefsEdit.putBoolean("NightMode", false)
+                sharedPrefsEdit.apply()
+
+            }else{
+
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                sharedPrefsEdit.putBoolean("NightMode", true)
+                sharedPrefsEdit.apply()
+
+            }
+
+
+        }
+
+        binding.selectBackground.setOnClickListener {
+
+            val view = View.inflate(this@SettingsActivity, R.layout.selectbackground,null)
+            val builder = AlertDialog.Builder(this@SettingsActivity)
+            builder.setView(view)
+
+            val dialog = builder.create()
+            dialog.show()
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+            try {
+                chooseBackground.setOnClickListener {
+
+                    val imgUrIntent = Intent()
+                    imgUrIntent.action = Intent.ACTION_GET_CONTENT
+                    imgUrIntent.type = "image/*"
+                    @Suppress("DEPRECATION")
+                    startActivityForResult(imgUrIntent, 4)
+
+                }
+                saveBackground.setOnClickListener {
+
+
+
+                }
+            }catch (e: Exception){
+
+                println(e.localizedMessage)
+
+            }
+
+        }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        try {
+            if (requestCode == 4) {
+
+                if (data != null) {
+
+                    if (data.data != null) {
+
+                        selectedImg = data.data
+                    }
+                }
+            }
+        }catch (e: Exception){
+
+            println(e.localizedMessage)
+
+        }
+    }
+
     //Commands that evaluate online status
+    override fun onRestart() {
+        super.onRestart()
+        super.onStart()
+
+        database!!.reference.child("Presence")
+            .child(currentId!!)
+            .setValue("Online")
+    }
     override fun onResume() {
         super.onResume()
 
@@ -43,24 +151,6 @@ class SettingsActivity : AppCompatActivity() {
             .setValue("Online")
 
     }
-
-    override fun onPause() {
-        super.onPause()
-
-        database!!.reference.child("Presence")
-            .child(currentId!!)
-            .setValue("Offline")
-    }
-
-    override fun onStop() {
-        super.onStop()
-
-        database!!.reference.child("Presence")
-            .child(currentId!!)
-            .setValue("Offline")
-
-    }
-
     override fun onDestroy() {
         super.onDestroy()
 

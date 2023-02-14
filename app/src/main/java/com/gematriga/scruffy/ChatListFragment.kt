@@ -13,8 +13,6 @@ import com.google.firebase.database.FirebaseDatabase
 
 class ChatListFragment : Fragment() {
 
-    private lateinit var viewPager: ViewPager
-    private lateinit var tabLayout: TabLayout
     private lateinit var database : FirebaseDatabase
     private lateinit var _binding: FragmentFeedBinding
     private val binding get() = _binding
