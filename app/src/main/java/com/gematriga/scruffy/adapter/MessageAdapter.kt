@@ -12,6 +12,14 @@ import com.gematriga.scruffy.databinding.ReceiverLayoutItemBinding
 import com.gematriga.scruffy.databinding.SendItemLayoutBinding
 import com.gematriga.scruffy.model.MessageModel
 import com.google.firebase.auth.FirebaseAuth
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.nanoseconds
+import kotlin.time.Duration.Companion.seconds
 
 
 class MessageAdapter(var context : Context, var list : ArrayList<MessageModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -32,6 +40,7 @@ class MessageAdapter(var context : Context, var list : ArrayList<MessageModel>) 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val message = list[position]
+
         if (holder.itemViewType == ITEM_SENT){
 
             val viewHolder = holder as SentViewHolder
@@ -55,6 +64,8 @@ class MessageAdapter(var context : Context, var list : ArrayList<MessageModel>) 
 
 
             }
+
+            viewHolder.binding.dateMsg.text = message.messageDate
             viewHolder.binding.userMsg.text = message.message
 
 
@@ -83,6 +94,7 @@ class MessageAdapter(var context : Context, var list : ArrayList<MessageModel>) 
 
 
             }
+            viewHolder.binding.dateMsg.text = message.messageDate
             viewHolder.binding.userMsg.text = message.message
 
         }

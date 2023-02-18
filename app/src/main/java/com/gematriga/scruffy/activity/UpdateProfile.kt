@@ -221,7 +221,7 @@ class UpdateProfile : AppCompatActivity() {
                     nickName = it.child("name").value.toString()
                     phoneNumber = it.child("number").value.toString()
 
-                    Glide.with(this).load(url).into(profileImageView)
+                    Glide.with(applicationContext).load(url).into(profileImageView)
 
                     userNameProfile.text = nickName
                     changeUserName.setText(nickName)

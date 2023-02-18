@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -35,14 +34,15 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var auth : FirebaseAuth
     private lateinit var dReference : DatabaseReference
     private var database : FirebaseDatabase? = null
-    lateinit var toggle : ActionBarDrawerToggle
+    private lateinit var toggle : ActionBarDrawerToggle
     lateinit var userList : ArrayList<UserModel>
 
-    var url : String? = null
-    var backgroundUrl : String? = null
-    var nickName : String? = null
-    var phoneNumber : String? = null
-    var currentId : String? = null
+
+    private var url : String? = null
+    private var backgroundUrl : String? = null
+    private var nickName : String? = null
+    private var phoneNumber : String? = null
+    private var currentId : String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,13 +72,14 @@ class HomeActivity : AppCompatActivity() {
 
         }
 
+
         //Commands that evaluate online status
         database!!.reference.child("Presence")
             .child(currentId!!)
             .setValue("Online")
 
         //Slidable menu
-        var drawerLayout : DrawerLayout = findViewById(R.id.drawerLayout)
+        val drawerLayout : DrawerLayout = findViewById(R.id.drawerLayout)
         val navView : NavigationView = binding.navView
 
         toggle = ActionBarDrawerToggle(this,binding.drawerLayout, R.string.open, R.string.close)
@@ -133,7 +134,10 @@ class HomeActivity : AppCompatActivity() {
                             for (snapshot1 in snapshot.children){
 
                                 val user = snapshot1.getValue(UserModel::class.java)
-                                if(user!!.uid !=FirebaseAuth.getInstance().uid && user!!.name!!.toLowerCase(Locale.getDefault()).contains(newText.toString())){
+                                if(user!!.uid !=FirebaseAuth.getInstance().uid && user.name!!.lowercase(
+                                        Locale.getDefault()
+                                    )
+                                        .contains(newText.toString())){
                                         userList.add(user)
                                 }
 
@@ -247,8 +251,8 @@ class HomeActivity : AppCompatActivity() {
                     backgroundUrl = it.child("backgroundUrl").value.toString()
 
                     //getReferenceAndLoadNewBackground(backgroundUrl.toString())
-                    println(backgroundUrl)
-                    Glide.with(this).load(url).into(nickPhoto)
+
+                    Glide.with(applicationContext).load(url).into(nickPhoto)
 
                     user_name.text = nickName
                     phoneOrMail.text = phoneNumber
@@ -262,11 +266,7 @@ class HomeActivity : AppCompatActivity() {
             println(e.localizedMessage?.plus(e.message))
 
         }
-
-
     }
-
-
 
     //Commands that evaluate online status
 
@@ -301,9 +301,6 @@ class HomeActivity : AppCompatActivity() {
         database!!.reference.child("Presence")
             .child(currentId!!)
             .setValue("Offline")
-
-        Toast.makeText(this@HomeActivity,"3",Toast.LENGTH_LONG).show()
-
 
     }
 

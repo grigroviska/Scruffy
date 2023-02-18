@@ -1,5 +1,8 @@
+@file:Suppress("DEPRECATION")
+
 package com.gematriga.scruffy.activity
 
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -14,8 +17,6 @@ import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.graphics.drawable.toDrawable
-import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.gematriga.scruffy.adapter.MessageAdapter
 import com.gematriga.scruffy.databinding.ActivityChatBinding
@@ -32,13 +33,14 @@ import kotlinx.android.synthetic.main.send_item_layout.*
 import java.util.*
 import kotlin.collections.ArrayList
 
+@Suppress("DEPRECATION")
 class ChatActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityChatBinding
     private lateinit var database : FirebaseDatabase
     private lateinit var dReference : DatabaseReference
     private lateinit var storage : FirebaseStorage
-    lateinit var sharedPreferences: SharedPreferences
+    private lateinit var sharedPreferences: SharedPreferences
 
     private lateinit var senderUid : String
     private lateinit var receiverUid : String
@@ -47,12 +49,13 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var receiverRoom : String
 
     private lateinit var list : ArrayList<MessageModel>
-    var dialog : ProgressDialog?= null
-    var url : String? = null
-    var nickName : String? = null
+    private var dialog : ProgressDialog?= null
+    private var url : String? = null
+    private var nickName : String? = null
 
 
 
+    @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChatBinding.inflate(layoutInflater)
@@ -119,8 +122,8 @@ class ChatActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                database!!.reference.child("Presence")
-                    .child(senderUid!!)
+                database.reference.child("Presence")
+                    .child(senderUid)
                     .setValue("Typing...")
 
                 handler.removeCallbacksAndMessages(null)
@@ -129,7 +132,7 @@ class ChatActivity : AppCompatActivity() {
 
             var userStoppedTyping = Runnable {
 
-                database!!.reference.child("Presence")
+                database.reference.child("Presence")
                     .child(senderUid)
                     .setValue("Online")
 
@@ -161,7 +164,7 @@ class ChatActivity : AppCompatActivity() {
                     .addOnSuccessListener {
 
                         database.reference.child("chats").child(receiverRoom).child("message")
-                            .child(randomKey!!).setValue(message).addOnSuccessListener {
+                            .child(randomKey).setValue(message).addOnSuccessListener {
 
                                 binding.messageBox.text = null
 
@@ -180,7 +183,7 @@ class ChatActivity : AppCompatActivity() {
                     .addOnSuccessListener {
 
                         database.reference.child("chats").child(receiverRoom).child("message")
-                            .child(randomKey!!).setValue(message).addOnSuccessListener {
+                            .child(randomKey).setValue(message).addOnSuccessListener {
 
                                 binding.messageBox.text = null
 
@@ -194,7 +197,7 @@ class ChatActivity : AppCompatActivity() {
 
 
 
-        database!!.reference.child("Presence").child(receiverUid!!)
+        database.reference.child("Presence").child(receiverUid)
             .addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()){
@@ -206,7 +209,7 @@ class ChatActivity : AppCompatActivity() {
 
                         }else{
 
-                            binding.status.setText(status)
+                            binding.status.text = status
                             binding.status.visibility = View.VISIBLE
 
                         }
@@ -235,6 +238,7 @@ class ChatActivity : AppCompatActivity() {
                     }
 
                     binding.recyclerView.adapter = MessageAdapter(this@ChatActivity,list)
+                    recyclerView.scrollToPosition(list.size - 1)
 
                 }
 
@@ -246,6 +250,7 @@ class ChatActivity : AppCompatActivity() {
 
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         try {
@@ -257,7 +262,7 @@ class ChatActivity : AppCompatActivity() {
 
                         val selectedImage = data.data
                         val calendar = Calendar.getInstance()
-                        var reference = storage.reference.child("chats")
+                        val reference = storage.reference.child("chats")
                             .child(calendar.timeInMillis.toString() + "")
                         dialog!!.show()
                         reference.putFile(selectedImage!!)
@@ -279,7 +284,7 @@ class ChatActivity : AppCompatActivity() {
                                                 .addOnSuccessListener {
 
                                                     database.reference.child("chats").child(receiverRoom).child("message")
-                                                        .child(randomKey!!).setValue(message).addOnSuccessListener {
+                                                        .child(randomKey).setValue(message).addOnSuccessListener {
 
                                                             binding.messageBox.text = null
 
@@ -307,16 +312,16 @@ class ChatActivity : AppCompatActivity() {
         super.onRestart()
         super.onStart()
 
-        database!!.reference.child("Presence")
-            .child(senderUid!!)
+        database.reference.child("Presence")
+            .child(senderUid)
             .setValue("Online")
     }
 
     override fun onResume() {
         super.onResume()
 
-        database!!.reference.child("Presence")
-            .child(senderUid!!)
+        database.reference.child("Presence")
+            .child(senderUid)
             .setValue("Online")
 
     }
@@ -340,7 +345,7 @@ class ChatActivity : AppCompatActivity() {
 
                 Glide.with(this).load(url).into(binding.nickProfile)
 
-                binding.nickName.setText(nickName)
+                binding.nickName.text = nickName
             }.addOnFailureListener {
                 Log.e("firebase", "Error getting data", it)
             }

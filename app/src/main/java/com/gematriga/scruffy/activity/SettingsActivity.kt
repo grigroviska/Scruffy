@@ -80,6 +80,13 @@ class SettingsActivity : AppCompatActivity() {
 
         }
 
+        binding.coverMode.setOnClickListener {
+
+            val goToCover = Intent(this@SettingsActivity, CoverActivity::class.java)
+            startActivity(goToCover)
+
+        }
+
         binding.selectBackground.setOnClickListener {
 
             val view = View.inflate(this@SettingsActivity, R.layout.selectbackground,null)

@@ -108,6 +108,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/cover_mode"
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -131,13 +132,13 @@
                         android:layout_toEndOf="@+id/coverImageIcon"
                         />
 
-                    <androidx.appcompat.widget.SwitchCompat
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:src="@drawable/scruffy_forward_icon"
                         android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:switchMinWidth="50dp"
-                        android:theme="@style/nightModeSwitch"/>
+                        android:layout_centerVertical="true"/>
+
                 </RelativeLayout>
 
                 <RelativeLayout
