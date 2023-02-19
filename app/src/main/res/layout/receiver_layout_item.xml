@@ -11,6 +11,31 @@
     >
 
     <LinearLayout
+        android:id="@+id/dateGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/date_drawable"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/dateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="22.10.2005"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:textColorLink="@color/chat_link_color_receiver"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="InvalidId" />
+
+        </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/mLinear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -99,6 +124,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:layout_marginStart="3dp"
                 android:text="21:04"
                 android:textColor="@color/white"
                 android:textSize="12sp"

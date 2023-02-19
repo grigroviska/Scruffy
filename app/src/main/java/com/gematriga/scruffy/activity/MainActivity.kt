@@ -5,15 +5,12 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.widget.addTextChangedListener
 import com.gematriga.scruffy.R
 import com.gematriga.scruffy.databinding.ActivityMainBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -160,7 +157,7 @@ class MainActivity : AppCompatActivity() {
 
             if (it.isSuccessful){
 
-                val intent : Intent = Intent(this, HomeActivity::class.java)
+                val intent = Intent(this, HomeActivity::class.java)
                 intent.putExtra("email", account.email)
                 startActivity(intent)
 

@@ -1,6 +1,5 @@
 package com.gematriga.scruffy.activity
 
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
@@ -10,7 +9,6 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import com.gematriga.scruffy.R
-import com.gematriga.scruffy.databinding.ActivityHomeBinding
 import com.gematriga.scruffy.databinding.ActivitySettingsBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -121,6 +119,8 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("DEPRECATION")
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         try {
