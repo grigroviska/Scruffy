@@ -10,12 +10,18 @@ import com.bumptech.glide.Glide
 import com.gematriga.scruffy.R
 import com.gematriga.scruffy.activity.ChatActivity
 import com.gematriga.scruffy.databinding.ChatUserItemLayoutBinding
+import com.gematriga.scruffy.model.MessageModel
 import com.gematriga.scruffy.model.UserModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
 
 class ChatAdapter(var context : Context, var list : ArrayList<UserModel>) : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
 
 
+    private val currentId : String = FirebaseAuth.getInstance().currentUser!!.uid
+
+    private val lastMessages = HashMap<String, String>()
     inner class ChatViewHolder(view : View) : RecyclerView.ViewHolder(view){
 
         var binding : ChatUserItemLayoutBinding = ChatUserItemLayoutBinding.bind(view)
@@ -30,7 +36,6 @@ class ChatAdapter(var context : Context, var list : ArrayList<UserModel>) : Recy
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
 
         var user = list[position]
-
 
         Glide.with(context).load(user.imageUrl).into(holder.binding.userImage)
         holder.binding.userName.text = user.name

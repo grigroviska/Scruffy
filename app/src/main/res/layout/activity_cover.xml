@@ -114,7 +114,6 @@
                     android:src="@drawable/rainy_cover"/>
 
             </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

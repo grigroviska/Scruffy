@@ -1,5 +1,6 @@
 package com.gematriga.scruffy.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +33,7 @@ class MessageAdapter(var context : Context, var list : ArrayList<MessageModel>) 
         return if(FirebaseAuth.getInstance().uid == list[position].senderId) ITEM_SENT else ITEM_RECEIVE
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val message = list[position]
         val hourFormat = SimpleDateFormat("hh:mm a")

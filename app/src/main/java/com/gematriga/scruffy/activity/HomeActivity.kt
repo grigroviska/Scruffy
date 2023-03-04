@@ -26,6 +26,7 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.nav_header.*
+import pl.droidsonroids.gif.GifImageView
 import java.util.*
 
 
@@ -44,7 +45,6 @@ class HomeActivity : AppCompatActivity() {
     private var phoneNumber : String? = null
     private var currentId : String? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
@@ -58,6 +58,8 @@ class HomeActivity : AppCompatActivity() {
         userList = ArrayList()
 
         checkData()
+
+
 
         val appSettingPrefs : SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
         val isNightModeOn : Boolean = appSettingPrefs.getBoolean("NightMode",false)

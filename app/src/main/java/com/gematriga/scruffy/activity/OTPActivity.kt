@@ -3,8 +3,7 @@
 package com.gematriga.scruffy.activity
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.content.SharedPreferences
+import android.content.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -12,6 +11,7 @@ import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.widget.EditText
 import android.widget.ProgressBar
@@ -52,11 +52,14 @@ class OTPActivity : AppCompatActivity() {
         binding = ActivityOtpactivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        init()
         OTP = intent.getStringExtra("OTP").toString()
         resendToken = intent.getParcelableExtra("resendToken")!!
         phoneNumber = intent.getStringExtra("phoneNumber")!!
 
-        binding.verifyNumberText.text = "${R.string.verifyYourPhone}  $phoneNumber"
+        auth = FirebaseAuth.getInstance()
+
+        binding.verifyNumberText.text = "Verify Number  $phoneNumber"
 
         val appSettingPrefs : SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
         val isNightModeOn : Boolean = appSettingPrefs.getBoolean("NightMode",false)
@@ -71,7 +74,7 @@ class OTPActivity : AppCompatActivity() {
 
         }
 
-        init()
+
         progressBar.visibility = View.INVISIBLE
         addTextChangeListener()
         resendOTPTvVisibility()
@@ -110,6 +113,8 @@ class OTPActivity : AppCompatActivity() {
             }
 
         }
+
+
 
     }
 
@@ -192,19 +197,181 @@ class OTPActivity : AppCompatActivity() {
     }
 
     private fun addTextChangeListener(){
+        try {
 
-        inputOTP1.addTextChangedListener(EditTextWatcher(inputOTP1))
-        inputOTP2.addTextChangedListener(EditTextWatcher(inputOTP2))
-        inputOTP3.addTextChangedListener(EditTextWatcher(inputOTP3))
-        inputOTP4.addTextChangedListener(EditTextWatcher(inputOTP4))
-        inputOTP5.addTextChangedListener(EditTextWatcher(inputOTP5))
-        inputOTP6.addTextChangedListener(EditTextWatcher(inputOTP6))
+            inputOTP1.addTextChangedListener(object : TextWatcher{
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    if (inputOTP1.text.toString().length == 1) {
+                        inputOTP2.requestFocus()
+                    }
+                }
+
+                override fun afterTextChanged(p0: Editable?) {}
+            })
+
+            inputOTP2.addTextChangedListener(object : TextWatcher{
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    if (inputOTP2.text.isNullOrEmpty() && p2 > 0) {
+                        inputOTP1.requestFocus()
+                    } else if (inputOTP2.text.toString().length == 1) {
+                        inputOTP3.requestFocus()
+                    }
+
+                    addKeyListener()
+                }
+
+                override fun afterTextChanged(p0: Editable?) {}
+            })
+
+            inputOTP3.addTextChangedListener(object : TextWatcher{
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    if (inputOTP3.text.isNullOrEmpty() && p2 > 0) {
+                        inputOTP2.requestFocus()
+                    } else if (inputOTP3.text.toString().length == 1) {
+                        inputOTP4.requestFocus()
+                    }
+
+                    addKeyListener()
+                }
+
+                override fun afterTextChanged(p0: Editable?) {}
+            })
+
+            inputOTP4.addTextChangedListener(object : TextWatcher{
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    if (inputOTP4.text.isNullOrEmpty() && p2 > 0) {
+                        inputOTP3.requestFocus()
+                    } else if (inputOTP4.text.toString().length == 1) {
+                        inputOTP5.requestFocus()
+                    }
+
+                    addKeyListener()
+                }
+
+                override fun afterTextChanged(p0: Editable?) {}
+            })
+
+            inputOTP5.addTextChangedListener(object : TextWatcher{
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    if (inputOTP5.text.isNullOrEmpty() && p2 > 0) {
+                        inputOTP4.requestFocus()
+                    } else if (inputOTP5.text.toString().length == 1) {
+                        inputOTP6.requestFocus()
+                    }
+
+                    addKeyListener()
+                }
+
+                override fun afterTextChanged(p0: Editable?) {}
+            })
+
+            inputOTP6.addTextChangedListener(object : TextWatcher{
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    if (inputOTP6.text.isNullOrEmpty() && p2 > 0) {
+                        inputOTP5.requestFocus()
+                    } else if (inputOTP6.text.toString().length == 1) {
+                        binding.verifyOTPBtn.requestFocus()
+                    }
+
+                    addKeyListener()
+                }
+
+                override fun afterTextChanged(p0: Editable?) {}
+            })
+
+        }catch (e: Exception){
+
+            Toast.makeText(this@OTPActivity,e.localizedMessage,Toast.LENGTH_LONG).show()
+
+        }
+
+    }
+
+    private fun addKeyListener() {
+        try {
+
+            inputOTP2.setOnKeyListener { _, keyCode, event ->
+                if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && inputOTP2.text.isNullOrEmpty()) {
+                    // Backspace was pressed and the current input field is empty
+                    // Move focus to the previous input field
+                    inputOTP2.clearFocus()
+                    inputOTP1.requestFocus()
+                    true // Consume the event
+                } else {
+                    false // Don't consume the event
+                }
+            }
+
+            inputOTP3.setOnKeyListener { _, keyCode, event ->
+                if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && inputOTP3.text.isNullOrEmpty()) {
+                    // Backspace was pressed and the current input field is empty
+                    // Move focus to the previous input field
+                    inputOTP3.clearFocus()
+                    inputOTP2.requestFocus()
+                    true // Consume the event
+                } else {
+                    false // Don't consume the event
+                }
+            }
+
+            inputOTP4.setOnKeyListener { _, keyCode, event ->
+                if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && inputOTP4.text.isNullOrEmpty()) {
+                    // Backspace was pressed and the current input field is empty
+                    // Move focus to the previous input field
+                    inputOTP4.clearFocus()
+                    inputOTP3.requestFocus()
+                    true // Consume the event
+                } else {
+                    false // Don't consume the event
+                }
+            }
+
+            inputOTP5.setOnKeyListener { _, keyCode, event ->
+                if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && inputOTP5.text.isNullOrEmpty()) {
+                    // Backspace was pressed and the current input field is empty
+                    // Move focus to the previous input field
+                    inputOTP5.clearFocus()
+                    inputOTP4.requestFocus()
+                    true // Consume the event
+                } else {
+                    false // Don't consume the event
+                }
+            }
+
+            inputOTP6.setOnKeyListener { _, keyCode, event ->
+                if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && inputOTP6.text.isNullOrEmpty()) {
+                    // Backspace was pressed and the current input field is empty
+                    // Move focus to the previous input field
+                    inputOTP6.clearFocus()
+                    inputOTP5.requestFocus()
+                    true // Consume the event
+                } else {
+                    false // Don't consume the event
+                }
+            }
+
+        }catch (e: Exception){
+
+            Toast.makeText(this@OTPActivity,e.localizedMessage,Toast.LENGTH_LONG).show()
+
+        }
 
     }
 
     private fun init(){
 
-        auth = FirebaseAuth.getInstance()
         progressBar = findViewById(R.id.otpProgressBar)
         inputOTP1 = findViewById(R.id.otpEditText1)
         inputOTP2 = findViewById(R.id.otpEditText2)
@@ -247,42 +414,13 @@ class OTPActivity : AppCompatActivity() {
             verificationId: String,
             token: PhoneAuthProvider.ForceResendingToken
         ) {
-            // The SMS verification code has been sent to the provided phone number, we
-            // now need to ask the user to enter the code and then construct a credential
-            // by combining the code with a verification ID.
 
-            // Save verification ID and resending token so we can use them later
             OTP = verificationId
             resendToken = token
 
+
         }
+
     }
 
-    inner class EditTextWatcher(private val view : View) : TextWatcher{
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-        }
-
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-        }
-
-        override fun afterTextChanged(p0: Editable?) {
-
-            val text = p0.toString()
-            when(view.id){
-
-                R.id.otpEditText1 -> if (text.length == 1) inputOTP2.requestFocus()
-                R.id.otpEditText2 -> if (text.length == 1) inputOTP3.requestFocus() else if(text.isEmpty()) inputOTP1.requestFocus()
-                R.id.otpEditText3 -> if (text.length == 1) inputOTP4.requestFocus() else if(text.isEmpty()) inputOTP2.requestFocus()
-                R.id.otpEditText4 -> if (text.length == 1) inputOTP5.requestFocus() else if(text.isEmpty()) inputOTP3.requestFocus()
-                R.id.otpEditText5 -> if (text.length == 1) inputOTP6.requestFocus() else if(text.isEmpty()) inputOTP4.requestFocus()
-                R.id.otpEditText6 -> if (text.length == 1) inputOTP6.clearFocus()   else if(text.isEmpty()) inputOTP5.requestFocus()
-
-            }
-
-        }
-
-
-    }
 }

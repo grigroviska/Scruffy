@@ -83,6 +83,7 @@
                     android:id="@+id/phoneEditTextNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:autoText="true"
                     android:textColor="@color/textThemeColor"
                     android:textColorHint="@color/textThemeColor"
                     android:textSize="20sp"

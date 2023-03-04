@@ -7,6 +7,8 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -17,6 +19,7 @@ import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.graphics.drawable.toDrawable
 import com.bumptech.glide.Glide
 import com.gematriga.scruffy.adapter.MessageAdapter
 import com.gematriga.scruffy.databinding.ActivityChatBinding
@@ -76,6 +79,15 @@ class ChatActivity : AppCompatActivity() {
 
         database = FirebaseDatabase.getInstance()
         storage = FirebaseStorage.getInstance()
+
+        val chatBackground = getSharedPreferences("chatBackground", Context.MODE_PRIVATE)
+        val chat = chatBackground.getString("photo", null)
+
+        if (chat != null) {
+            val bytes = android.util.Base64.decode(chat, android.util.Base64.DEFAULT)
+            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+            chatActivityLayout.background = BitmapDrawable(resources, bitmap)
+        }
 
         val appSettingPrefs : SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
         val isNightModeOn : Boolean = appSettingPrefs.getBoolean("NightMode",false)
@@ -155,7 +167,7 @@ class ChatActivity : AppCompatActivity() {
             if (binding.messageBox.text.isNotEmpty() && binding.messageBox.text.toString().trim().isNotBlank()) {
 
                 val message =
-                    MessageModel(binding.messageBox.text.toString(), senderUid, Date().time,null,null)
+                    MessageModel(binding.messageBox.text.toString(), senderUid, Date().time,null)
 
                 val randomKey = database.reference.push().key
 
