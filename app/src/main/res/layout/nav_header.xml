@@ -10,7 +10,8 @@
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gifImageView2"
         android:layout_width="match_parent"
-        android:layout_height="185dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/profile_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.bumptech.glide.Glide
+import com.gematriga.scruffy.R
 import com.gematriga.scruffy.databinding.ActivityUpdateProfileBinding
 import com.gematriga.scruffy.model.UserModel
 import com.google.firebase.auth.FirebaseAuth
@@ -17,6 +18,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_update_profile.*
+import kotlinx.android.synthetic.main.nav_header.*
 import java.util.*
 
 class UpdateProfile : AppCompatActivity() {
@@ -40,6 +42,26 @@ class UpdateProfile : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.materialToolbar)
+
+        val coverPreferences = getSharedPreferences("CoverPref", 0)
+        val coverGet = coverPreferences.getString("cover","default")
+
+        try {
+
+            when(coverGet){
+
+                "default" -> Glide.with(applicationContext).load(R.drawable.profile_bg).into(backgroundImage)
+
+                "cityCenter" -> Glide.with(applicationContext).load(R.drawable.citycenter_cover).into(backgroundImage)
+
+                "rainCover" -> Glide.with(applicationContext).load(R.drawable.rainy_cover).into(backgroundImage)
+            }
+
+        }catch (e : Exception){
+
+            Toast.makeText(this@UpdateProfile, e.localizedMessage, Toast.LENGTH_LONG).show()
+
+        }
 
         val appSettingPrefs : SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
         val isNightModeOn : Boolean = appSettingPrefs.getBoolean("NightMode",false)
@@ -79,7 +101,6 @@ class UpdateProfile : AppCompatActivity() {
             val imgUrIntent = Intent()
             imgUrIntent.action = Intent.ACTION_GET_CONTENT
             imgUrIntent.type = "image/*"
-            @Suppress("DEPRECATION")
             startActivityForResult(imgUrIntent, 1)
 
         }
@@ -192,9 +213,7 @@ class UpdateProfile : AppCompatActivity() {
 
     }
 
-    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        @Suppress("DEPRECATION")
         super.onActivityResult(requestCode, resultCode, data)
 
             if (data != null){

@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package com.gematriga.scruffy.activity
 
 import android.annotation.SuppressLint
@@ -36,7 +34,6 @@ import kotlinx.android.synthetic.main.send_item_layout.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-@Suppress("DEPRECATION")
 class ChatActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityChatBinding
@@ -56,9 +53,6 @@ class ChatActivity : AppCompatActivity() {
     private var url : String? = null
     private var nickName : String? = null
 
-
-
-    @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChatBinding.inflate(layoutInflater)
@@ -262,7 +256,6 @@ class ChatActivity : AppCompatActivity() {
 
     }
 
-    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         try {

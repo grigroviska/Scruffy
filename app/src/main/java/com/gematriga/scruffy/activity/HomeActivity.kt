@@ -28,6 +28,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_update_profile.*
 import kotlinx.android.synthetic.main.activity_update_profile.view.*
 import kotlinx.android.synthetic.main.nav_header.*
 import pl.droidsonroids.gif.GifImageView
@@ -254,12 +255,12 @@ class HomeActivity : AppCompatActivity() {
                     phoneNumber = it.child("number").value.toString()
                     backgroundUrl = it.child("backgroundUrl").value.toString()
 
-                    //getReferenceAndLoadNewBackground(backgroundUrl.toString())
-
                     Glide.with(applicationContext).load(url).into(nickPhoto)
 
                     user_name.text = nickName
                     phoneOrMail.text = phoneNumber
+
+                    cover()
 
                 }.addOnFailureListener {
                     Log.e("firebase", "Error getting data", it)
@@ -272,11 +273,37 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    private fun cover(){
+
+        val coverPreferences = getSharedPreferences("CoverPref", 0)
+        val coverGet = coverPreferences.getString("cover","default")
+
+        try {
+
+            when(coverGet){
+
+                "default" -> Glide.with(applicationContext).load(R.drawable.profile_bg).into(gifImageView2)
+
+                "cityCenter" -> Glide.with(applicationContext).load(R.drawable.citycenter_cover).into(gifImageView2)
+
+                "rainCover" -> Glide.with(applicationContext).load(R.drawable.rainy_cover).into(gifImageView2)
+            }
+
+        }catch (e : Exception){
+
+            Toast.makeText(this@HomeActivity, e.localizedMessage, Toast.LENGTH_LONG).show()
+
+        }
+
+    }
+
     //Commands that evaluate online status
 
     override fun onRestart() {
         super.onRestart()
         super.onStart()
+
+        cover()
 
         database!!.reference.child("Presence")
             .child(currentId!!)

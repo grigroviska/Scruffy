@@ -1,6 +1,8 @@
 package com.gematriga.scruffy.activity
 
+import android.annotation.SuppressLint
 import android.content.res.Resources
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.media.Image
 import android.net.Uri
@@ -26,43 +28,42 @@ class CoverActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        val coverPreferences = getSharedPreferences("CoverPref", MODE_PRIVATE)
+        val coverPreferences = getSharedPreferences("CoverPref", 0)
         val coverGet = coverPreferences.getString("cover","default")
-        
 
+        val radioGroup = findViewById<RadioGroup>(R.id.radioGroup)
 
-        binding.defaultCover.setOnCheckedChangeListener { compoundButton, b ->
-            binding.defaultCover.isChecked = true
-            binding.citycenterCover.isChecked = false
-            binding.rainCover.isChecked = false
-            if (coverGet != "default") {
-                coverPreferences.edit().putString("cover", "default").apply()
-                Log.d("CoverActivity", "New cover preference: ${coverPreferences.getString("cover","default")}")
-                println("$coverGet")
+        when (coverGet) {
+            "default" -> binding.radioButton1.isChecked = true
+            "cityCenter" -> binding.radioButton2.isChecked = true
+            "rainCover" -> binding.radioButton3.isChecked = true
+        }
+
+        radioGroup.setOnCheckedChangeListener { group, checkedId ->
+            if (checkedId == R.id.radioButton1) {
+
+                if (coverGet != "default") {
+                    coverPreferences.edit().putString("cover", "default").apply()
+
+                }
+
+            } else if (checkedId == R.id.radioButton2) {
+
+                if (coverGet != "cityCenter") {
+                    coverPreferences.edit().putString("cover", "cityCenter").apply()
+
+                }
+
+            } else {
+
+                if (coverGet != "rainCover") {
+                    coverPreferences.edit().putString("cover", "rainCover").apply()
+
+                }
+
             }
         }
 
-        binding.citycenterCover.setOnCheckedChangeListener { compoundButton, b ->
-            binding.citycenterCover.isChecked = true
-            binding.defaultCover.isChecked = false
-            binding.rainCover.isChecked = false
-            if (coverGet != "cityCenter") {
-                coverPreferences.edit().putString("cover", "cityCenter").apply()
-                Log.d("CoverActivity", "New cover preference: ${coverPreferences.getString("cover","cityCenter")}")
-                println("$coverGet")
-            }
-        }
-
-        binding.rainCover.setOnCheckedChangeListener { compoundButton, b ->
-            binding.rainCover.isChecked = true
-            binding.citycenterCover.isChecked = false
-            binding.defaultCover.isChecked = false
-            if (coverGet != "rainCover") {
-                coverPreferences.edit().putString("cover", "rainCover").apply()
-                Log.d("CoverActivity", "New cover preference: ${coverPreferences.getString("cover","rainCover")}")
-                println("$coverGet")
-            }
-        }
     }
 
 }

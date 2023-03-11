@@ -41,8 +41,8 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
-        android:layout_width="409dp"
-        android:layout_height="657dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -113,7 +113,63 @@
                     android:layout_height="200dp"
                     android:src="@drawable/rainy_cover"/>
 
-            </LinearLayout>
+            </LinearLayout>-->
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/blueSky"
+                    android:layout_width="wrap_content"
+                    android:layout_height="220dp"
+                    android:src="@drawable/profile_bg"/>
+
+                <RadioButton
+                    android:id="@+id/radioButton1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Blue Sky"
+                    android:textAlignment="center"
+                    android:button="@null"
+                    android:textColor="@drawable/radio_button_text_color"
+                    />
+
+                <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/cityCenter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    android:src="@drawable/citycenter_cover"/>
+
+                <RadioButton
+                    android:id="@+id/radioButton2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="City Center"
+                    android:textAlignment="center"
+                    android:button="@null"
+                    android:textColor="@drawable/radio_button_text_color"
+                    />
+
+                <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/rainy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="190dp"
+                    android:src="@drawable/rainy_cover"/>
+
+                <RadioButton
+                    android:id="@+id/radioButton3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="City Center"
+                    android:textAlignment="center"
+                    android:button="@null"
+                    android:textColor="@drawable/radio_button_text_color"
+                    />
+
+            </RadioGroup>
+
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

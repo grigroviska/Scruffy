@@ -68,7 +68,6 @@ class ProfileActivity : AppCompatActivity() {
             val imgUrIntent = Intent()
             imgUrIntent.action = Intent.ACTION_GET_CONTENT
             imgUrIntent.type = "image/*"
-            @Suppress("DEPRECATION")
             startActivityForResult(imgUrIntent, 1)
 
         }
@@ -137,9 +136,7 @@ class ProfileActivity : AppCompatActivity() {
 
     }
 
-    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        @Suppress("DEPRECATION")
         super.onActivityResult(requestCode, resultCode, data)
 
         if (data != null){
