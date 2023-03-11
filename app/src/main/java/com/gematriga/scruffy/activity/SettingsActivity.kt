@@ -5,12 +5,10 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import com.gematriga.scruffy.R
 import com.gematriga.scruffy.databinding.ActivitySettingsBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -23,6 +21,7 @@ open class SettingsActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivitySettingsBinding
     private var database : FirebaseDatabase? = null
+    private lateinit var auth : FirebaseAuth
 
     private var currentId : String? = null
     private var selectedImg : Uri? = null
@@ -33,9 +32,9 @@ open class SettingsActivity : AppCompatActivity() {
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
         currentId = FirebaseAuth.getInstance().uid
-        var preferenceManager: PreferenceManager
 
         //Commands that evaluate online status
         database!!.reference.child("Presence")
@@ -70,17 +69,14 @@ open class SettingsActivity : AppCompatActivity() {
 
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 sharedPrefsEdit.putBoolean("NightMode", false)
-                sharedPrefsEdit.apply()
 
             }else{
 
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 sharedPrefsEdit.putBoolean("NightMode", true)
-                sharedPrefsEdit.apply()
 
             }
-
-
+            sharedPrefsEdit.apply()
         }
 
         binding.coverMode.setOnClickListener {
@@ -90,30 +86,37 @@ open class SettingsActivity : AppCompatActivity() {
 
         }
 
-        binding.selectBackground.setOnClickListener {
-
-            /*val view = View.inflate(this@SettingsActivity, R.layout.selectbackground,null)
-            val builder = AlertDialog.Builder(this@SettingsActivity)
-            builder.setView(view)
-
-            val dialog = builder.create()
-            dialog.show()
-            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)*/
-
+        binding.selectBackgroundLayout.setOnClickListener {
 
             val imgUrIntent = Intent()
             imgUrIntent.action = Intent.ACTION_GET_CONTENT
             imgUrIntent.type = "image/*"
-            @Suppress("DEPRECATION")
             startActivityForResult(imgUrIntent, 4)
+
+        }
+
+        binding.signOutLayout.setOnClickListener {
+
+            val builder = AlertDialog.Builder(this@SettingsActivity)
+            builder.setTitle("Are you sure?")
+            builder.setMessage("Are you going out :(")
+            builder.setPositiveButton("Yes") { dialog, which ->
+
+                auth.signOut()
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+
+            }
+            builder.setNegativeButton("No") { dialog, which ->
+            }
+            val dialog = builder.create()
+            dialog.show()
+
         }
 
 
     }
 
-
-    @Suppress("DEPRECATION")
-    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         try {

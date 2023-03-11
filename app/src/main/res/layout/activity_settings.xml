@@ -141,38 +141,6 @@
 
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/mainThemeTextIcon"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/scruffy_font_color_icon"
-                        android:background="@drawable/round_back_main_text_theme"
-                        android:padding="8dp"/>
-
-                    <TextView
-                        android:layout_marginStart="20dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="Main Theme Text Color"
-                        android:textColor="#FFF"
-                        android:textStyle="bold"
-                        android:layout_toEndOf="@+id/mainThemeTextIcon"
-                        />
-
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:switchMinWidth="50dp"
-                        android:theme="@style/nightModeSwitch"/>
-                </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_marginTop="10dp"
@@ -227,6 +195,7 @@
                     />
 
                 <RelativeLayout
+                    android:id="@+id/selectBackgroundLayout"
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -281,30 +250,32 @@
                     />
 
                 <RelativeLayout
+                    android:id="@+id/signOutLayout"
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/deactivateIcon"
+                        android:id="@+id/signOutIcon"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/scruffy_theme_icon"
+                        android:src="@drawable/scruffy_sign_out"
                         android:background="@drawable/round_back_night_mode"
-                        android:padding="12dp"/>
+                        android:padding="8dp"/>
 
                     <TextView
                         android:layout_marginStart="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="Deactivate Account"
+                        android:text="Sign Out"
                         android:textColor="#FFF"
                         android:textStyle="bold"
-                        android:layout_toEndOf="@+id/deactivateIcon"
+                        android:layout_toEndOf="@+id/signOutIcon"
                         />
 
                     <ImageView
+                        android:id="@+id/signOutToDirect"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/scruffy_forward_icon"

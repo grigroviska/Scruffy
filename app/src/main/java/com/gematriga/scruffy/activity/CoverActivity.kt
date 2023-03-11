@@ -1,14 +1,20 @@
 package com.gematriga.scruffy.activity
 
+import android.content.res.Resources
+import android.graphics.drawable.Drawable
+import android.media.Image
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ImageView
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.gematriga.scruffy.R
 import com.gematriga.scruffy.databinding.ActivityCoverBinding
 import com.google.firebase.database.FirebaseDatabase
+import pl.droidsonroids.gif.GifImageView
 
 class CoverActivity : AppCompatActivity() {
 

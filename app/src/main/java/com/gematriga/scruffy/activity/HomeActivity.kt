@@ -1,13 +1,16 @@
 package com.gematriga.scruffy.activity
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -25,6 +28,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_update_profile.view.*
 import kotlinx.android.synthetic.main.nav_header.*
 import pl.droidsonroids.gif.GifImageView
 import java.util.*
@@ -58,8 +62,6 @@ class HomeActivity : AppCompatActivity() {
         userList = ArrayList()
 
         checkData()
-
-
 
         val appSettingPrefs : SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
         val isNightModeOn : Boolean = appSettingPrefs.getBoolean("NightMode",false)
@@ -305,16 +307,5 @@ class HomeActivity : AppCompatActivity() {
             .setValue("Offline")
 
     }
-
-    /*private fun getReferenceAndLoadNewBackground(backgroundShortTitle: String) {
-        val storageReference = FirebaseStorage.getInstance().reference.child("BackgroundCover").child(
-            "$backgroundShortTitle.jpeg"
-        )
-        storageReference.downloadUrl
-            .addOnSuccessListener { Glide.with(this).load(it).into(nickPhoto)
-                println(it)
-                println(storageReference)
-            }
-    }*/
 
 }
