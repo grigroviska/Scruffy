@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package com.gematriga.scruffy.activity
 
 import android.annotation.SuppressLint
@@ -46,7 +44,6 @@ class OTPActivity : AppCompatActivity() {
     private lateinit var inputOTP5 : EditText
     private lateinit var inputOTP6 : EditText
 
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOtpactivityBinding.inflate(layoutInflater)

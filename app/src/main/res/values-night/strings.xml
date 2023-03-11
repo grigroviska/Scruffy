@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Scruffy</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="verifyNumberText">Verify Your Phone Number</string>
+    <string name="verifyInfoText">We will send verification code on your number to verify.</string>
+    <string name="verifySendButton">Send Verification Code</string>
+    <string name="typeYourNumber">Type Your Number</string>
+    <string name="verifyYourPhone">Verify Number</string>
+    <string name="profileText">Profile Info</string>
+    <string name="nameInput">Enter Your Name</string>
+    <string name="continueButtonText">CONTINUE</string>
+    <string name="editNameAndImage">Please set your name and image</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+</resources>

@@ -27,6 +27,13 @@ class CoverActivity : AppCompatActivity() {
         binding = ActivityCoverBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.materialToolbar.setNavigationOnClickListener {
+
+            onBackPressedDispatcher.onBackPressed()
+
+
+        }
+
 
         val coverPreferences = getSharedPreferences("CoverPref", 0)
         val coverGet = coverPreferences.getString("cover","default")
