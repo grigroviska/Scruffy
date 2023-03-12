@@ -83,6 +83,7 @@ class ChatActivity : AppCompatActivity() {
             chatActivityLayout.background = BitmapDrawable(resources, bitmap)
         }
 
+        //Querying the status of the dark mode
         val appSettingPrefs : SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
         val isNightModeOn : Boolean = appSettingPrefs.getBoolean("NightMode",false)
 

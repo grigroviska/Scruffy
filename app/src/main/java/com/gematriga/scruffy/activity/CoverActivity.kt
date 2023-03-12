@@ -1,6 +1,7 @@
 package com.gematriga.scruffy.activity
 
 import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.Drawable
@@ -31,6 +32,20 @@ class CoverActivity : AppCompatActivity() {
 
             onBackPressedDispatcher.onBackPressed()
 
+
+        }
+
+        //Querying the status of the dark mode
+        val appSettingPrefs : SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
+        val isNightModeOn : Boolean = appSettingPrefs.getBoolean("NightMode",false)
+
+        if (isNightModeOn){
+
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
+
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         }
 

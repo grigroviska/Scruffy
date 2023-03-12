@@ -58,6 +58,7 @@ class OTPActivity : AppCompatActivity() {
 
         binding.verifyNumberText.text = "Verify Number  $phoneNumber"
 
+        //Querying the status of the dark mode
         val appSettingPrefs : SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
         val isNightModeOn : Boolean = appSettingPrefs.getBoolean("NightMode",false)
 
@@ -218,7 +219,17 @@ class OTPActivity : AppCompatActivity() {
                         inputOTP3.requestFocus()
                     }
 
-                    addKeyListener()
+                    inputOTP2.setOnKeyListener { _, keyCode, event ->
+                        if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && inputOTP2.text.isNullOrEmpty()) {
+                            // Backspace was pressed and the current input field is empty
+                            // Move focus to the previous input field
+                            inputOTP2.clearFocus()
+                            inputOTP1.requestFocus()
+                            true // Consume the event
+                        } else {
+                            false // Don't consume the event
+                        }
+                    }
                 }
 
                 override fun afterTextChanged(p0: Editable?) {}
@@ -234,7 +245,17 @@ class OTPActivity : AppCompatActivity() {
                         inputOTP4.requestFocus()
                     }
 
-                    addKeyListener()
+                    inputOTP3.setOnKeyListener { _, keyCode, event ->
+                        if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && inputOTP3.text.isNullOrEmpty()) {
+                            // Backspace was pressed and the current input field is empty
+                            // Move focus to the previous input field
+                            inputOTP3.clearFocus()
+                            inputOTP2.requestFocus()
+                            true // Consume the event
+                        } else {
+                            false // Don't consume the event
+                        }
+                    }
                 }
 
                 override fun afterTextChanged(p0: Editable?) {}
@@ -250,7 +271,17 @@ class OTPActivity : AppCompatActivity() {
                         inputOTP5.requestFocus()
                     }
 
-                    addKeyListener()
+                    inputOTP4.setOnKeyListener { _, keyCode, event ->
+                        if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && inputOTP4.text.isNullOrEmpty()) {
+                            // Backspace was pressed and the current input field is empty
+                            // Move focus to the previous input field
+                            inputOTP4.clearFocus()
+                            inputOTP3.requestFocus()
+                            true // Consume the event
+                        } else {
+                            false // Don't consume the event
+                        }
+                    }
                 }
 
                 override fun afterTextChanged(p0: Editable?) {}
@@ -266,7 +297,17 @@ class OTPActivity : AppCompatActivity() {
                         inputOTP6.requestFocus()
                     }
 
-                    addKeyListener()
+                    inputOTP5.setOnKeyListener { _, keyCode, event ->
+                        if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && inputOTP5.text.isNullOrEmpty()) {
+                            // Backspace was pressed and the current input field is empty
+                            // Move focus to the previous input field
+                            inputOTP5.clearFocus()
+                            inputOTP4.requestFocus()
+                            true // Consume the event
+                        } else {
+                            false // Don't consume the event
+                        }
+                    }
                 }
 
                 override fun afterTextChanged(p0: Editable?) {}
@@ -282,7 +323,17 @@ class OTPActivity : AppCompatActivity() {
                         binding.verifyOTPBtn.requestFocus()
                     }
 
-                    addKeyListener()
+                    inputOTP6.setOnKeyListener { _, keyCode, event ->
+                        if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && inputOTP6.text.isNullOrEmpty()) {
+                            // Backspace was pressed and the current input field is empty
+                            // Move focus to the previous input field
+                            inputOTP6.clearFocus()
+                            inputOTP5.requestFocus()
+                            true // Consume the event
+                        } else {
+                            false // Don't consume the event
+                        }
+                    }
                 }
 
                 override fun afterTextChanged(p0: Editable?) {}
@@ -296,76 +347,6 @@ class OTPActivity : AppCompatActivity() {
 
     }
 
-    private fun addKeyListener() {
-        try {
-
-            inputOTP2.setOnKeyListener { _, keyCode, event ->
-                if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && inputOTP2.text.isNullOrEmpty()) {
-                    // Backspace was pressed and the current input field is empty
-                    // Move focus to the previous input field
-                    inputOTP2.clearFocus()
-                    inputOTP1.requestFocus()
-                    true // Consume the event
-                } else {
-                    false // Don't consume the event
-                }
-            }
-
-            inputOTP3.setOnKeyListener { _, keyCode, event ->
-                if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && inputOTP3.text.isNullOrEmpty()) {
-                    // Backspace was pressed and the current input field is empty
-                    // Move focus to the previous input field
-                    inputOTP3.clearFocus()
-                    inputOTP2.requestFocus()
-                    true // Consume the event
-                } else {
-                    false // Don't consume the event
-                }
-            }
-
-            inputOTP4.setOnKeyListener { _, keyCode, event ->
-                if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && inputOTP4.text.isNullOrEmpty()) {
-                    // Backspace was pressed and the current input field is empty
-                    // Move focus to the previous input field
-                    inputOTP4.clearFocus()
-                    inputOTP3.requestFocus()
-                    true // Consume the event
-                } else {
-                    false // Don't consume the event
-                }
-            }
-
-            inputOTP5.setOnKeyListener { _, keyCode, event ->
-                if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && inputOTP5.text.isNullOrEmpty()) {
-                    // Backspace was pressed and the current input field is empty
-                    // Move focus to the previous input field
-                    inputOTP5.clearFocus()
-                    inputOTP4.requestFocus()
-                    true // Consume the event
-                } else {
-                    false // Don't consume the event
-                }
-            }
-
-            inputOTP6.setOnKeyListener { _, keyCode, event ->
-                if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && inputOTP6.text.isNullOrEmpty()) {
-                    // Backspace was pressed and the current input field is empty
-                    // Move focus to the previous input field
-                    inputOTP6.clearFocus()
-                    inputOTP5.requestFocus()
-                    true // Consume the event
-                } else {
-                    false // Don't consume the event
-                }
-            }
-
-        }catch (e: Exception){
-
-            Toast.makeText(this@OTPActivity,e.localizedMessage,Toast.LENGTH_LONG).show()
-
-        }
-
-    }
 
     private fun init(){
 

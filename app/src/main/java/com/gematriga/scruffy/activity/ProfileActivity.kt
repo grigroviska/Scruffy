@@ -35,6 +35,7 @@ class ProfileActivity : AppCompatActivity() {
         setSupportActionBar(materialToolbar)
         supportActionBar?.title = "Profile"
 
+        //Querying the status of the dark mode
         val appSettingPrefs : SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
         val isNightModeOn : Boolean = appSettingPrefs.getBoolean("NightMode",false)
 

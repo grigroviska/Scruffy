@@ -46,7 +46,7 @@ open class SettingsActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
 
         }
-
+        //Querying the status of the dark mode
         val appSettingPrefs : SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
         val sharedPrefsEdit : SharedPreferences.Editor = appSettingPrefs.edit()
         val isNightModeOn : Boolean = appSettingPrefs.getBoolean("NightMode",false)
@@ -63,6 +63,7 @@ open class SettingsActivity : AppCompatActivity() {
 
         }
 
+        //Dark mode on/off
         binding.nightModeSwitch.setOnClickListener {
 
             if(isNightModeOn){

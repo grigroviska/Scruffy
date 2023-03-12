@@ -64,6 +64,7 @@ class HomeActivity : AppCompatActivity() {
 
         checkData()
 
+        //Querying the status of the dark mode
         val appSettingPrefs : SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
         val isNightModeOn : Boolean = appSettingPrefs.getBoolean("NightMode",false)
 
@@ -104,6 +105,7 @@ class HomeActivity : AppCompatActivity() {
             }
             true
         }
+
 
         binding.materialToolbar.setNavigationOnClickListener {
 
