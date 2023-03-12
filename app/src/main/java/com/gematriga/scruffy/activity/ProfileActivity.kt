@@ -64,7 +64,9 @@ class ProfileActivity : AppCompatActivity() {
         storage = FirebaseStorage.getInstance()
         auth = FirebaseAuth.getInstance()
 
-        binding.userImage.setOnClickListener {
+        val imageSelect = binding.userImage
+
+        imageSelect.setOnClickListener {
 
             val imgUrIntent = Intent()
             imgUrIntent.action = Intent.ACTION_GET_CONTENT

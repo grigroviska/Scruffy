@@ -13,6 +13,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@android:color/transparent"
         android:translationZ="1dp"
+        android:outlineProvider="none"
         android:visibility="visible"
         app:titleTextColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
