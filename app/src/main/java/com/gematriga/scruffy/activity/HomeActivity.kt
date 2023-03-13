@@ -264,6 +264,12 @@ class HomeActivity : AppCompatActivity() {
 
                     cover()
 
+                    nickPhoto.setOnClickListener {
+
+                        startActivity(Intent(this,UpdateProfile::class.java))
+
+                    }
+
                 }.addOnFailureListener {
                     Log.e("firebase", "Error getting data", it)
                 }
@@ -278,17 +284,22 @@ class HomeActivity : AppCompatActivity() {
     private fun cover(){
 
         val coverPreferences = getSharedPreferences("CoverPref", 0)
-        val coverGet = coverPreferences.getString("cover","default")
+        val coverGet = coverPreferences.getString("cover","blueSky")
 
         try {
 
             when(coverGet){
 
-                "default" -> Glide.with(applicationContext).load(R.drawable.profile_bg).into(gifImageView2)
+                "blueSky" -> Glide.with(applicationContext).load(R.drawable.profile_bg).into(gifImageView2)
 
                 "cityCenter" -> Glide.with(applicationContext).load(R.drawable.citycenter_cover).into(gifImageView2)
 
-                "rainCover" -> Glide.with(applicationContext).load(R.drawable.rainy_cover).into(gifImageView2)
+                "rainyDay" -> Glide.with(applicationContext).load(R.drawable.rainy_cover).into(gifImageView2)
+
+                "computerStore" -> Glide.with(applicationContext).load(R.drawable.computerstore).into(gifImageView2)
+
+                "cafeMood" -> Glide.with(applicationContext).load(R.drawable.cafemood).into(gifImageView2)
+
             }
 
         }catch (e : Exception){

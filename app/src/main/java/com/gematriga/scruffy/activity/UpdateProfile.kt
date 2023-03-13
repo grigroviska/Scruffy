@@ -43,25 +43,7 @@ class UpdateProfile : AppCompatActivity() {
 
         setSupportActionBar(binding.materialToolbar)
 
-        val coverPreferences = getSharedPreferences("CoverPref", 0)
-        val coverGet = coverPreferences.getString("cover","default")
-
-        try {
-
-            when(coverGet){
-
-                "default" -> Glide.with(applicationContext).load(R.drawable.profile_bg).into(backgroundImage)
-
-                "cityCenter" -> Glide.with(applicationContext).load(R.drawable.citycenter_cover).into(backgroundImage)
-
-                "rainCover" -> Glide.with(applicationContext).load(R.drawable.rainy_cover).into(backgroundImage)
-            }
-
-        }catch (e : Exception){
-
-            Toast.makeText(this@UpdateProfile, e.localizedMessage, Toast.LENGTH_LONG).show()
-
-        }
+        cover()
 
         //Querying the status of the dark mode
         val appSettingPrefs : SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
@@ -106,6 +88,8 @@ class UpdateProfile : AppCompatActivity() {
 
         }
 
+
+
         binding.inviteYourFriends.setOnClickListener {
 
             val invite = Intent(Intent.ACTION_SEND)
@@ -124,6 +108,16 @@ class UpdateProfile : AppCompatActivity() {
                 binding.selectBackground.visibility = View.VISIBLE
                 binding.userNameProfile.visibility = View.INVISIBLE
                 binding.changeUserName.visibility = View.VISIBLE
+
+                binding.selectBackground.setOnClickListener {
+
+                    startActivity(Intent(this,CoverActivity::class.java))
+                    binding.selectProfilePhoto.visibility = View.INVISIBLE
+                    binding.selectBackground.visibility = View.INVISIBLE
+                    binding.userNameProfile.visibility = View.VISIBLE
+                    binding.changeUserName.visibility = View.INVISIBLE
+
+                }
 
             } else{
                 println(selectedImg)
@@ -261,10 +255,41 @@ class UpdateProfile : AppCompatActivity() {
 
     }
 
+    private fun cover(){
+
+        val coverPreferences = getSharedPreferences("CoverPref", 0)
+        val coverGet = coverPreferences.getString("cover","blueSky")
+
+        try {
+
+            when(coverGet){
+
+                "blueSky" -> Glide.with(applicationContext).load(R.drawable.profile_bg).into(backgroundImage)
+
+                "cityCenter" -> Glide.with(applicationContext).load(R.drawable.citycenter_cover).into(backgroundImage)
+
+                "rainyDay" -> Glide.with(applicationContext).load(R.drawable.rainy_cover).into(backgroundImage)
+
+                "computerStore" -> Glide.with(applicationContext).load(R.drawable.computerstore).into(backgroundImage)
+
+                "cafeMood" -> Glide.with(applicationContext).load(R.drawable.cafemood).into(backgroundImage)
+
+            }
+
+        }catch (e : Exception){
+
+            Toast.makeText(this@UpdateProfile, e.localizedMessage, Toast.LENGTH_LONG).show()
+
+        }
+
+    }
+
     //Commands that evaluate online status
     override fun onRestart() {
         super.onRestart()
         super.onStart()
+
+        cover()
 
         database!!.reference.child("Presence")
             .child(currentId!!)

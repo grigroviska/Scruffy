@@ -51,21 +51,23 @@ class CoverActivity : AppCompatActivity() {
 
 
         val coverPreferences = getSharedPreferences("CoverPref", 0)
-        val coverGet = coverPreferences.getString("cover","default")
+        val coverGet = coverPreferences.getString("cover","blueSky")
 
         val radioGroup = findViewById<RadioGroup>(R.id.radioGroup)
 
         when (coverGet) {
-            "default" -> binding.radioButton1.isChecked = true
+            "blueSky" -> binding.radioButton1.isChecked = true
             "cityCenter" -> binding.radioButton2.isChecked = true
-            "rainCover" -> binding.radioButton3.isChecked = true
+            "rainyDay" -> binding.radioButton3.isChecked = true
+            "computerStore" -> binding.radioButton4.isChecked = true
+            "cafeMood" -> binding.radioButton5.isChecked = true
         }
 
         radioGroup.setOnCheckedChangeListener { group, checkedId ->
             if (checkedId == R.id.radioButton1) {
 
-                if (coverGet != "default") {
-                    coverPreferences.edit().putString("cover", "default").apply()
+                if (coverGet != "blueSky") {
+                    coverPreferences.edit().putString("cover", "blueSky").apply()
 
                 }
 
@@ -76,10 +78,24 @@ class CoverActivity : AppCompatActivity() {
 
                 }
 
-            } else {
+            } else if(checkedId == R.id.radioButton3){
 
-                if (coverGet != "rainCover") {
-                    coverPreferences.edit().putString("cover", "rainCover").apply()
+                if (coverGet != "rainyDay") {
+                    coverPreferences.edit().putString("cover", "rainyDay").apply()
+
+                }
+
+            }else if(checkedId == R.id.radioButton4){
+
+                if (coverGet != "computerStore") {
+                    coverPreferences.edit().putString("cover", "computerStore").apply()
+
+                }
+
+            } else{
+
+                if (coverGet != "cafeMood") {
+                    coverPreferences.edit().putString("cover", "cafeMood").apply()
 
                 }
 

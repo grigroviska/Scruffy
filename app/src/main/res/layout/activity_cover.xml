@@ -44,6 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
@@ -52,68 +53,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <!--<LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <androidx.appcompat.widget.AppCompatRadioButton
-                    android:id="@+id/default_cover"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center|start"
-                    android:layout_gravity="center"
-                    android:textAlignment="center" />
-
-                <pl.droidsonroids.gif.GifImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="200dp"
-                    android:src="@drawable/profile_bg"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
-
-                <androidx.appcompat.widget.AppCompatRadioButton
-                    android:id="@+id/citycenter_cover"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center|start"
-                    android:layout_gravity="center"
-                    android:textAlignment="center" />
-
-                <pl.droidsonroids.gif.GifImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="200dp"
-                    android:src="@drawable/citycenter_cover"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
-
-                <androidx.appcompat.widget.AppCompatRadioButton
-                    android:id="@+id/rain_cover"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center|start"
-                    android:layout_gravity="center"
-                    android:textAlignment="center" />
-
-                <pl.droidsonroids.gif.GifImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="200dp"
-                    android:src="@drawable/rainy_cover"/>
-
-            </LinearLayout>-->
 
             <RadioGroup
                 android:id="@+id/radioGroup"
@@ -131,6 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Blue Sky"
+                    android:textSize="18sp"
                     android:textAlignment="center"
                     android:button="@null"
                     android:textColor="@drawable/radio_button_text_color"
@@ -147,13 +87,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="City Center"
+                    android:textSize="18sp"
                     android:textAlignment="center"
                     android:button="@null"
                     android:textColor="@drawable/radio_button_text_color"
                     />
 
                 <pl.droidsonroids.gif.GifImageView
-                    android:id="@+id/rainy"
+                    android:id="@+id/rainyDay"
                     android:layout_width="wrap_content"
                     android:layout_height="190dp"
                     android:src="@drawable/rainy_cover"/>
@@ -162,7 +103,43 @@
                     android:id="@+id/radioButton3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="City Center"
+                    android:text="Rainy Day"
+                    android:textSize="18sp"
+                    android:textAlignment="center"
+                    android:button="@null"
+                    android:textColor="@drawable/radio_button_text_color"
+                    />
+
+                <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/computerStore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="190dp"
+                    android:src="@drawable/computerstore"/>
+
+                <RadioButton
+                    android:id="@+id/radioButton4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Computer Store"
+                    android:textSize="18sp"
+                    android:textAlignment="center"
+                    android:button="@null"
+                    android:textColor="@drawable/radio_button_text_color"
+                    />
+
+                <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/cafeMood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="180dp"
+                    android:src="@drawable/cafemood"/>
+
+                <RadioButton
+                    android:id="@+id/radioButton5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="80dp"
+                    android:text="Cafe Mood"
+                    android:textSize="18sp"
                     android:textAlignment="center"
                     android:button="@null"
                     android:textColor="@drawable/radio_button_text_color"
