@@ -45,7 +45,7 @@
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:text="Username"/>
+                android:text="@string/usernameForCA"/>
 
             <TextView
                 android:id="@+id/status"
@@ -55,7 +55,7 @@
                 android:visibility="invisible"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:text="Online"/>
+                android:text="@string/onlineForCA"/>
 
         </LinearLayout>
 
@@ -148,7 +148,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start|center"
             android:background="@android:color/transparent"
-            android:hint="Enter Your Message"
+            android:hint="@string/enter_your_message"
             android:textColor="@color/textThemeColor"
             android:textColorHint="@color/textThemeColor"
             android:padding="10dp"

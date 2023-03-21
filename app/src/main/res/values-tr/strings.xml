@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Scruffy</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="verifyNumberText">Telefon Numarası Doğrulama</string>
+    <string name="verifyInfoText">Telefonunuza doğrulama kodunu göndereceğiz.</string>
+    <string name="verifySendButton">Doğrula</string>
+    <string name="typeYourNumber">Numaranızı Giriniz</string>
+    <string name="verifyYourPhone">Verify Number</string>
+    <string name="profileText">Profil Oluştur</string>
+    <string name="nameInput">İsim gir</string>
+    <string name="continueButtonText">Devam Et</string>
+    <string name="editNameAndImage">Lütfen bir fotoğraf seçin</string>
+    <string name="open">Aç</string>
+    <string name="close">Kapat</string>
+    <string name="usernameForCA">Kullanıcı Adı</string>
+    <string name="onlineForCA">Aktif</string>
+    <string name="cover">Arkaplan</string>
+    <string name="blue_sky">Mavi Gökyüzü</string>
+    <string name="city_center">Şehir Merkezi</string>
+    <string name="rainy_day">Yağmurlu Gün</string>
+    <string name="computer_store">Bilgisayar Mağazası</string>
+    <string name="cafe_mood">Kafe Modu</string>
+    <string name="verifyForOTP">Doğrula</string>
+    <string name="verify_number">Numarayı Doğrula</string>
+    <string name="resend_otp">Yeniden Gönder</string>
+    <string name="settingsForSA">Ayarlar</string>
+    <string name="displayForSA">Görünüm</string>
+    <string name="night_modeForSA">Karanlık Mod</string>
+    <string name="coverForSA">Arkaplan modu</string>
+    <string name="chat_displayForSA">Mesaj Alan Görünümü</string>
+    <string name="chat_backgroundForSA">Mesaj Arkaplanı</string>
+    <string name="languageForSA">Dil</string>
+    <string name="profileForSA">Profil</string>
+    <string name="sign_out">Hesaptan Çıkış Yap</string>
+    <string name="phoneNumber">Telefon Numarası</string>
+    <string name="edit_profileForUP">Düzenle</string>
+    <string name="invite_your_friendsForUP">Davet Et</string>
+    <string name="app_language">Uygulama Dili</string>
+    <string name="englishLanguage">İngilizce</string>
+    <string name="turkishLanguage">Türkçe</string>
+    <string name="germanLanguage">Almanca</string>
+    <string name="tap_to_chat">Konuşmak için Tıkla</string>
+    <string name="home">Ana Sayfa</string>
+    <string name="about">Hakkında</string>
+    <string name="github">Github</string>
+    <string name="enter_your_message">Mesaj Girin</string>
+    <string name="imagefrom">imageFrom</string>
+</resources>

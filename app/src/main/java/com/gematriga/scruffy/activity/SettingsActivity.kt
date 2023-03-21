@@ -1,13 +1,15 @@
 package com.gematriga.scruffy.activity
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.widget.RadioGroup
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -16,10 +18,11 @@ import com.gematriga.scruffy.databinding.ActivitySettingsBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.bottom_sheet_language.*
 import java.util.*
 
 
-open class SettingsActivity : AppCompatActivity() {
+open class SettingsActivity : AppCompatActivity(){
 
     private lateinit var binding : ActivitySettingsBinding
     private var database : FirebaseDatabase? = null
@@ -27,9 +30,6 @@ open class SettingsActivity : AppCompatActivity() {
 
     private var currentId : String? = null
     private var selectedImg : Uri? = null
-
-    private lateinit var locale: Locale
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,12 +48,6 @@ open class SettingsActivity : AppCompatActivity() {
         binding.materialToolbar.setNavigationOnClickListener {
 
             onBackPressedDispatcher.onBackPressed()
-
-        }
-
-        binding.languageLayout.setOnClickListener {
-
-            showLanguageBottomSheet()
 
         }
 
@@ -130,7 +124,6 @@ open class SettingsActivity : AppCompatActivity() {
 
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         try {
@@ -160,43 +153,6 @@ open class SettingsActivity : AppCompatActivity() {
 
         }
     }
-
-    private fun showLanguageBottomSheet(){
-
-        val bottomSheetView = layoutInflater.inflate(R.layout.bottom_sheet_language, null)
-        val bottomSheetDialog = BottomSheetDialog(this)
-        bottomSheetDialog.setContentView(bottomSheetView)
-
-        val languageRadioGroup = bottomSheetView.findViewById<RadioGroup>(R.id.language_radio_group)
-
-        languageRadioGroup.setOnCheckedChangeListener { _, checkedId ->
-            when (checkedId) {
-                R.id.english_radio_button -> setLocale("en", this)
-                R.id.turkish_radio_button -> setLocale("tr",this)
-                R.id.german_radio_button -> setLocale("de",this)
-            }
-            bottomSheetDialog.dismiss()
-        }
-
-        bottomSheetDialog.show()
-
-    }
-
-    private fun setLocale(languageCode: String, context: Context) {
-        val locale = Locale(languageCode)
-        Locale.setDefault(locale)
-
-        val resources = context?.resources
-        val config = Configuration(resources?.configuration)
-
-        config.setLocale(locale)
-
-        resources?.updateConfiguration(config, resources.displayMetrics)
-
-        // If you want to save the selected language preference for future app launches,
-        // you can use SharedPreferences here
-    }
-
     //Commands that evaluate online status
     override fun onRestart() {
         super.onRestart()

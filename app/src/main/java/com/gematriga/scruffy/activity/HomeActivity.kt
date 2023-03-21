@@ -316,6 +316,7 @@ class HomeActivity : AppCompatActivity() {
         super.onRestart()
         super.onStart()
 
+
         cover()
 
         database!!.reference.child("Presence")

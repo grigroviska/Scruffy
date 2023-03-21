@@ -30,14 +30,14 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:textColor="@color/textThemeColor"
-            android:text="@string/nameInput"/>
+            android:text="@string/usernameForCA"/>
 
         <TextView
             android:id="@+id/recentMsg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/textThemeColor"
-            android:text="Tap To Chat"/>
+            android:text="@string/tap_to_chat"/>
 
 
     </LinearLayout>

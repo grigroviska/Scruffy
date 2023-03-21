@@ -72,9 +72,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:visibility="visible"
-        android:text="Bart Simpson"
+        android:text="@string/usernameForCA"
         android:textColor="@color/textThemeColor"
-        android:textSize="22dp"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/profileImageView"
         app:layout_constraintTop_toBottomOf="@+id/profileImageView" />
@@ -83,9 +83,9 @@
         android:id="@+id/changeUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bart Simpson"
+        android:text="@string/usernameForCA"
         android:textColor="@color/textThemeColor"
-        android:textSize="22dp"
+        android:textSize="22sp"
         android:textStyle="bold"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/profileImageView"
@@ -98,8 +98,8 @@
         android:layout_marginTop="8dp"
         android:visibility="visible"
         android:textColor="@color/textThemeColor"
-        android:text="PhoneNumber"
-        android:textSize="16dp"
+        android:text="@string/phoneNumber"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/userNameProfile"
         app:layout_constraintTop_toBottomOf="@+id/userNameProfile" />
 
@@ -110,7 +110,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         app:cornerRadius="20dp"
-        android:text="EDIT PROFILE"
+        android:text="@string/edit_profileForUP"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backgroundImage" />
 
@@ -127,7 +127,7 @@
         android:id="@+id/inviteYourFriends"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="INVITE YOUR FRIENDS"
+        android:text="@string/invite_your_friendsForUP"
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

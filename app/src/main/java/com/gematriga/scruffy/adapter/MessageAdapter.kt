@@ -2,12 +2,15 @@ package com.gematriga.scruffy.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gematriga.scruffy.R
+import com.gematriga.scruffy.activity.FullscreenImageActivity
 import com.gematriga.scruffy.databinding.ReceiverLayoutItemBinding
 import com.gematriga.scruffy.databinding.SendItemLayoutBinding
 import com.gematriga.scruffy.model.MessageModel
@@ -33,12 +36,13 @@ class MessageAdapter(var context : Context, var list : ArrayList<MessageModel>) 
         return if(FirebaseAuth.getInstance().uid == list[position].senderId) ITEM_SENT else ITEM_RECEIVE
     }
 
-    @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val message = list[position]
         val hourFormat = SimpleDateFormat("hh:mm a")
         val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+        val intentDateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm a")
         val currentDate = millisecondsToDate(message.timeStamp, dateFormat)
+        val intentFormat = millisecondsToDate(message.timeStamp, intentDateFormat)
 
         val showDate = currentDate != previousDate
 
@@ -55,6 +59,16 @@ class MessageAdapter(var context : Context, var list : ArrayList<MessageModel>) 
                     .placeholder(R.drawable.simpson)
                     .into(viewHolder.binding.image)
                 viewHolder.binding.pdateMsg.text = millisecondsToDate(message.timeStamp, hourFormat)
+
+                viewHolder.binding.image.setOnClickListener {
+
+                    val intent = Intent(context, FullscreenImageActivity::class.java)
+                    intent.putExtra("imageUrl", message.imageUrl)
+                    intent.putExtra("imageDate", intentFormat)
+                    intent.putExtra("fromWho", message.senderId)
+                    context.startActivity(intent)
+
+                }
             }
 
             if (showDate) {

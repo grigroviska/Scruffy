@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="App Language"
+        android:text="@string/app_language"
         android:layout_marginBottom="20dp"
         android:layout_marginStart="10dp"
         android:textAppearance="?attr/textAppearanceHeadline6" />
@@ -25,19 +25,19 @@
             android:id="@+id/english_radio_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="English" />
+            android:text="@string/englishLanguage" />
 
         <RadioButton
             android:id="@+id/turkish_radio_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Turkish" />
+            android:text="@string/turkishLanguage" />
 
         <RadioButton
             android:id="@+id/german_radio_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="German" />
+            android:text="@string/germanLanguage" />
 
     </RadioGroup>
 
