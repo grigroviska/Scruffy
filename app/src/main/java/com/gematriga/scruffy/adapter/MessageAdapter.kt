@@ -95,6 +95,17 @@ class MessageAdapter(var context : Context, var list : ArrayList<MessageModel>) 
                     .placeholder(R.drawable.simpson)
                     .into(viewHolder.binding.image)
                 viewHolder.binding.pdateMsg.text = millisecondsToDate(message.timeStamp, hourFormat)
+
+                viewHolder.binding.image.setOnClickListener {
+
+                    val intent = Intent(context, FullscreenImageActivity::class.java)
+                    intent.putExtra("imageUrl", message.imageUrl)
+                    intent.putExtra("imageDate", intentFormat)
+                    intent.putExtra("fromWho", message.senderId)
+                    context.startActivity(intent)
+
+                }
+
             }
 
             if (showDate) {

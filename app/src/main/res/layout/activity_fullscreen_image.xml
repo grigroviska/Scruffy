@@ -14,8 +14,7 @@
         android:background="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:alpha="0.5">
+        app:layout_constraintTop_toTopOf="parent">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/materialToolbar"
@@ -23,6 +22,7 @@
         android:layout_height="?attr/actionBarSize"
         app:navigationIcon="@drawable/scruffy_back"
         app:titleTextColor="@color/white"
+        android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -54,6 +54,14 @@
                 android:text="12.01.2005 2.42 Pm"/>
 
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/downloadButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/download_icon"
+            android:layout_gravity="end"/>
 
 
     </com.google.android.material.appbar.MaterialToolbar>
