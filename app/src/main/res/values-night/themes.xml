@@ -19,21 +19,7 @@
         <item name="colorSwitchThumbNormal">#FFF</item>
         <item name="android:colorForeground">#99FFFFFF</item>
     </style>
-    
-    <style name="SCREEN">
 
-        <item name="android:background">@color/backgroundColor</item>
-        <item name="android:textColor">@color/white</item>
-
-    </style>
-
-
-    <style name="BUTTON">
-
-        <item name="android:background">@color/firstColor</item>
-        <item name="android:textColor">@color/white</item>
-
-    </style>
 
 
 </resources>

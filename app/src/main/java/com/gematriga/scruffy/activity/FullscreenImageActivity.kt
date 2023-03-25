@@ -1,19 +1,23 @@
 package com.gematriga.scruffy.activity
 
-import android.animation.ObjectAnimator
 import android.app.DownloadManager
+import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.*
 import android.widget.ImageView
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.gematriga.scruffy.R
 import com.gematriga.scruffy.databinding.ActivityFullscreenImageBinding
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_fullscreen_image.*
+import java.io.ByteArrayOutputStream
 
 
 class FullscreenImageActivity : AppCompatActivity() {
@@ -24,22 +28,17 @@ class FullscreenImageActivity : AppCompatActivity() {
     var imageUrl : String? = null
 
     private var isFullScreen = false
-    private lateinit var decorView: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFullscreenImageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.materialToolbar)
+        supportActionBar!!.title = null
 
         binding.materialToolbar.setNavigationOnClickListener {
 
             onBackPressedDispatcher.onBackPressed()
-
-        }
-
-        binding.downloadButton.setOnClickListener {
-
-            downloadImage()
 
         }
 
@@ -56,10 +55,7 @@ class FullscreenImageActivity : AppCompatActivity() {
 
         checkData()
 
-        decorView = window.decorView
-
         // Set the click listener on the ImageView
-// Set the touch listener on the ImageView
         imageView.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
@@ -100,6 +96,27 @@ class FullscreenImageActivity : AppCompatActivity() {
 
     }
 
+    private fun shareImage() {
+
+        val bitmap = (fullscreenImageView.drawable as BitmapDrawable).bitmap
+
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "image/jpeg"
+            putExtra(Intent.EXTRA_STREAM, getImageUri(applicationContext, bitmap))
+            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+        }
+
+        startActivity(Intent.createChooser(intent, "Share Image via"))
+
+    }
+
+    private fun getImageUri(context: Context, bitmap: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(context.contentResolver, bitmap, "Scruffy", null)
+        return Uri.parse(path)
+    }
+
     private fun downloadImage(){
 
         val request = DownloadManager.Request(Uri.parse(imageUrl))
@@ -117,20 +134,35 @@ class FullscreenImageActivity : AppCompatActivity() {
 
     private fun toggleFullScreen() {
         if (isFullScreen) {
-            // Show the system bars
-            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+
             binding.appBarLayout.visibility = View.VISIBLE
             // Set the isFullScreen flag to false
             isFullScreen = false
         } else {
-            // Hide the system bars
-            decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_FULLSCREEN
-                    or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+
             binding.appBarLayout.visibility = View.INVISIBLE
             // Set the isFullScreen flag to true
             isFullScreen = true
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        menuInflater.inflate(R.menu.image_menu, menu)
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId){
+
+            R.id.shareImage -> shareImage()
+            R.id.saveImage -> downloadImage()
+
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     private fun checkData(){
