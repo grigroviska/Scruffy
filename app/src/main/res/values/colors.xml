@@ -7,7 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="selectedAs">#9FFF8B</color>
+    <color name="selectedAs">#69B359</color>
 
     <color name="colorPrimary">@color/firstColor</color>
     <color name="colorPrimaryDark">@color/firstColor</color>

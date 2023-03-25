@@ -69,12 +69,11 @@
                     android:id="@+id/radioButton1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/blue_sky"
-                    android:textSize="18sp"
-                    android:textAlignment="center"
                     android:button="@null"
+                    android:text="@string/blue_sky"
+                    android:textAlignment="center"
                     android:textColor="@drawable/radio_button_text_color"
-                    />
+                    android:textSize="18sp" />
 
                 <pl.droidsonroids.gif.GifImageView
                     android:id="@+id/cityCenter"

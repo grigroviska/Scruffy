@@ -6,6 +6,7 @@
         android:id="@+id/search"
         android:title="Search"
         android:icon="@drawable/scruffy_search"
+        app:titleTextColor="@color/white"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="ifRoom|collapseActionView"/>
 
