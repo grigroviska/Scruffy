@@ -19,9 +19,6 @@ import com.google.firebase.database.*
 class ChatAdapter(var context : Context, var list : ArrayList<UserModel>) : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
 
 
-    private val currentId : String = FirebaseAuth.getInstance().currentUser!!.uid
-
-    private val lastMessages = HashMap<String, String>()
     inner class ChatViewHolder(view : View) : RecyclerView.ViewHolder(view){
 
         var binding : ChatUserItemLayoutBinding = ChatUserItemLayoutBinding.bind(view)
