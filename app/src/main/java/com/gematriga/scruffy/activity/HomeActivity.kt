@@ -1,20 +1,17 @@
 package com.gematriga.scruffy.activity
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.EditText
-import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
@@ -29,13 +26,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.activity_update_profile.*
-import kotlinx.android.synthetic.main.activity_update_profile.materialToolbar
-import kotlinx.android.synthetic.main.activity_update_profile.view.*
 import kotlinx.android.synthetic.main.nav_header.*
-import pl.droidsonroids.gif.GifImageView
 import java.util.*
+import kotlin.system.exitProcess
 
 
 class HomeActivity : AppCompatActivity() {
@@ -124,6 +117,24 @@ class HomeActivity : AppCompatActivity() {
         checkDataRecycler()
 
     }
+
+    override fun onBackPressed() {
+        if (isTaskRoot) {
+            AlertDialog.Builder(this@HomeActivity)
+                .setTitle("Exit")
+                .setMessage("Do you want to exit the application?")
+                .setPositiveButton("Yes") { _, _ ->
+                    finishAffinity()
+                    exitProcess(0)
+                }
+                .setNegativeButton("No", null)
+                .show()
+        } else {
+            finishAffinity()
+            exitProcess(0)
+        }
+    }
+
     //User search box codes
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
