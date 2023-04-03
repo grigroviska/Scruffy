@@ -25,6 +25,7 @@
     <color name="main_theme_text">#4F9185</color>
     <color name="main_theme_font">#904E55</color>
     <color name="chat_background">#CF8185</color>
+    <color name="clear_cache">#847E89</color>
     <color name="language_background">#73A355</color>
     <color name="chat_link_color_send">#D6D6D6</color>
     <color name="chat_link_color_receiver">#14A7D0</color>

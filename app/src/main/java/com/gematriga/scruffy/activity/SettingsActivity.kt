@@ -1,25 +1,23 @@
 package com.gematriga.scruffy.activity
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import com.gematriga.scruffy.R
 import com.gematriga.scruffy.databinding.ActivitySettingsBinding
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.android.synthetic.main.bottom_sheet_language.*
-import java.util.*
+import java.io.File
+
 
 
 open class SettingsActivity : AppCompatActivity(){
@@ -102,6 +100,19 @@ open class SettingsActivity : AppCompatActivity(){
 
         }
 
+        binding.clearCacheLayout.setOnClickListener {
+
+            val cacheDir = this.cacheDir
+            deleteDir(cacheDir)
+
+            Snackbar.make(it, "Cache cleared.", Snackbar.LENGTH_LONG)
+                .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
+                .setBackgroundTint(ContextCompat.getColor(this, R.color.primaryThemeColor))
+                .setTextColor(ContextCompat.getColor(this, R.color.white))
+                .show()
+
+        }
+
         binding.signOutLayout.setOnClickListener {
 
             val builder = AlertDialog.Builder(this@SettingsActivity)
@@ -123,6 +134,23 @@ open class SettingsActivity : AppCompatActivity(){
 
 
     }
+
+    private fun deleteDir(dir: File?): Boolean {
+        if (dir != null && dir.isDirectory) {
+            val children = dir.list()
+            for (i in children.indices) {
+                val success = deleteDir(File(dir, children[i]))
+                if (!success) {
+                    return false
+                }
+            }
+        }
+        return dir!!.delete()
+
+
+
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

@@ -46,4 +46,6 @@
     <string name="github">Github</string>
     <string name="enter_your_message">Enter Your Message</string>
     <string name="imagefrom">imageFrom</string>
+    <string name="application">Application</string>
+    <string name="clear_cache">Clear Cache</string>
 </resources>
