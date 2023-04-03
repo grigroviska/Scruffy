@@ -19,6 +19,9 @@
         android:theme="@style/Theme.Scruffy"
         tools:targetApi="31">
         <activity
+            android:name=".activity.AboutActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.FullscreenImageActivity"
             android:exported="false" />
         <activity
@@ -79,7 +82,15 @@
                 android:value="" />
         </activity>
 
-
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.scruffy.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
     </application>
 
 </manifest>

@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import android.widget.Toast
@@ -28,7 +29,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_update_profile.*
+import kotlinx.android.synthetic.main.activity_update_profile.materialToolbar
 import kotlinx.android.synthetic.main.activity_update_profile.view.*
 import kotlinx.android.synthetic.main.nav_header.*
 import pl.droidsonroids.gif.GifImageView
@@ -99,6 +102,7 @@ class HomeActivity : AppCompatActivity() {
                 //R.id.nav_home -> replaceFragment(ChatsFragment())
                 R.id.nav_settings -> startGo(SettingsActivity())
                 R.id.nav_profile -> startGo(UpdateProfile())
+                R.id.nav_about -> startGo(AboutActivity())
                 R.id.nav_github -> github()
                 R.id.sign_out -> signOut()
 
