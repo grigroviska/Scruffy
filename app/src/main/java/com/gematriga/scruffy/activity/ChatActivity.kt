@@ -119,6 +119,15 @@ class ChatActivity : AppCompatActivity() {
 
         }
 
+        binding.nickName.setOnClickListener {
+
+            val goToOtherProfile = Intent(this@ChatActivity, UpdateProfile::class.java)
+            goToOtherProfile.putExtra("fromChat", "true")
+            goToOtherProfile.putExtra("uid", receiverUid)
+            startActivity(goToOtherProfile)
+
+        }
+
         val handler = Handler()
         binding.messageBox.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

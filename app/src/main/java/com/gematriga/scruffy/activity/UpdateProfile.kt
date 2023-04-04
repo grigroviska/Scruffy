@@ -37,14 +37,24 @@ class UpdateProfile : AppCompatActivity() {
     private var nickName : String? = null
     private var phoneNumber : String? = null
 
-    private var currentId : String? = null
+    lateinit var whichActivity : String
+
+    private lateinit var currentId : String
+    private lateinit var who : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUpdateProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        whichActivity = intent.getStringExtra("fromChat").toString()
+        who = intent.getStringExtra("uid").toString()
+
+        println(whichActivity + who)
+
+
         setSupportActionBar(binding.materialToolbar)
+        supportActionBar!!.title = ""
 
         cover()
 
@@ -230,31 +240,61 @@ class UpdateProfile : AppCompatActivity() {
 
     private fun checkData(){
 
-        try {
-            dReference = FirebaseDatabase.getInstance().getReference("users")
-            dReference.child(currentId!!).get()
-                .addOnSuccessListener {
-                    url = it.child("imageUrl").value.toString()
-                    nickName = it.child("name").value.toString()
-                    phoneNumber = it.child("number").value.toString()
+        if (whichActivity == "true"){
 
-                    Glide.with(applicationContext).load(url).into(profileImageView)
+            binding.editProfileButton.visibility = View.GONE
 
-                    userNameProfile.text = nickName
-                    changeUserName.setText(nickName)
-                    phoneNumberProfile.text = phoneNumber
+            try {
+                dReference = FirebaseDatabase.getInstance().getReference("users")
+                dReference.child(who!!).get()
+                    .addOnSuccessListener {
+                        url = it.child("imageUrl").value.toString()
+                        nickName = it.child("name").value.toString()
+                        phoneNumber = it.child("number").value.toString()
 
-                }.addOnFailureListener {
-                    Log.e("firebase", "Error getting data", it)
-                }
+                        Glide.with(applicationContext).load(url).into(profileImageView)
 
-        }catch (e : Exception){
+                        userNameProfile.text = nickName
+                        changeUserName.setText(nickName)
+                        phoneNumberProfile.text = phoneNumber
 
-            Toast.makeText(this, e.localizedMessage?.plus(e.message), Toast.LENGTH_LONG).show()
-            println(e.localizedMessage?.plus(e.message))
+                    }.addOnFailureListener {
+                        Log.e("firebase", "Error getting data", it)
+                    }
 
+            }catch (e : Exception){
+
+                Toast.makeText(this, e.localizedMessage?.plus(e.message), Toast.LENGTH_LONG).show()
+                println(e.localizedMessage?.plus(e.message))
+
+            }
+
+        }else{
+            try {
+                dReference = FirebaseDatabase.getInstance().getReference("users")
+                dReference.child(currentId!!).get()
+                    .addOnSuccessListener {
+                        url = it.child("imageUrl").value.toString()
+                        nickName = it.child("name").value.toString()
+                        phoneNumber = it.child("number").value.toString()
+
+                        Glide.with(applicationContext).load(url).into(profileImageView)
+
+                        userNameProfile.text = nickName
+                        changeUserName.setText(nickName)
+                        phoneNumberProfile.text = phoneNumber
+
+                    }.addOnFailureListener {
+                        Log.e("firebase", "Error getting data", it)
+                    }
+
+            }catch (e : Exception){
+
+                Toast.makeText(this, e.localizedMessage?.plus(e.message), Toast.LENGTH_LONG).show()
+                println(e.localizedMessage?.plus(e.message))
+
+            }
         }
-
 
     }
 
