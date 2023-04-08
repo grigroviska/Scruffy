@@ -305,7 +305,7 @@ class HomeActivity : AppCompatActivity() {
 
             when(coverGet){
 
-                "blueSky" -> Glide.with(applicationContext).load(R.drawable.profile_bg).into(gifImageView2)
+                "blueSky" -> Glide.with(applicationContext).load(R.drawable.default_cover).into(gifImageView2)
 
                 "cityCenter" -> Glide.with(applicationContext).load(R.drawable.citycenter_cover).into(gifImageView2)
 

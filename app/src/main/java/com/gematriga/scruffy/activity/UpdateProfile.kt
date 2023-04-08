@@ -3,15 +3,12 @@ package com.gematriga.scruffy.activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.gematriga.scruffy.R
 import com.gematriga.scruffy.databinding.ActivityUpdateProfileBinding
@@ -21,7 +18,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_update_profile.*
-import kotlinx.android.synthetic.main.nav_header.*
 import java.util.*
 
 class UpdateProfile : AppCompatActivity() {
@@ -307,7 +303,7 @@ class UpdateProfile : AppCompatActivity() {
 
             when(coverGet){
 
-                "blueSky" -> Glide.with(applicationContext).load(R.drawable.profile_bg).into(backgroundImage)
+                "blueSky" -> Glide.with(applicationContext).load(R.drawable.default_cover).into(backgroundImage)
 
                 "cityCenter" -> Glide.with(applicationContext).load(R.drawable.citycenter_cover).into(backgroundImage)
 

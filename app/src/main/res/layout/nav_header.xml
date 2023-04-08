@@ -11,7 +11,7 @@
         android:id="@+id/gifImageView2"
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:src="@drawable/profile_bg"
+        android:src="@drawable/default_cover"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -3,7 +3,7 @@
     android:id="@+id/chatActivityLayout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/backchat"
+    android:background="@drawable/default_chatbackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.ChatActivity"
@@ -23,14 +23,14 @@
             android:id="@+id/backButton"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/scruffy_back"
+            android:src="@drawable/back_icon"
             android:layout_marginRight="2dp"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/nickProfile"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/scruffy_logo"
+            android:src="@drawable/profile_icon"
             android:layout_marginRight="10dp"/>
 
         <LinearLayout
@@ -76,7 +76,7 @@
             android:id="@+id/backButtonEdit"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/scruffy_back"
+            android:src="@drawable/back_icon"
             />
 
         <RelativeLayout
@@ -126,7 +126,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:padding="10dp"
-        android:src="@drawable/scruffy_send"
+        android:src="@drawable/send_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="@color/white" />
@@ -177,7 +177,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:padding="6dp"
-                android:src="@drawable/scruffy_attach_icon"/>
+                android:src="@drawable/attach_icon"/>
 
             <ImageView
                 android:id="@+id/camera"
@@ -185,45 +185,9 @@
                 android:layout_height="match_parent"
                 android:padding="8dp"
                 android:layout_marginRight="5dp"
-                android:src="@drawable/scruffy_camera_icon"/>
+                android:src="@drawable/camera_icon"/>
 
         </LinearLayout>
-
-        <!--<LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            >
-
-            <EditText
-                android:id="@+id/messageBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:hint="@string/enter_your_message"
-                android:textColor="@color/textThemeColor"
-                android:textColorHint="@color/textThemeColor"
-                android:padding="12dp"
-                android:layout_marginStart="10dp"
-                android:textSize="16sp"
-                />
-
-            <ImageView
-                android:id="@+id/attach"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:padding="6dp"
-                android:src="@drawable/scruffy_attach_icon"/>
-
-            <ImageView
-                android:id="@+id/camera"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:padding="8dp"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/scruffy_camera_icon"/>
-        </LinearLayout>-->
 
     </com.google.android.material.card.MaterialCardView>
 

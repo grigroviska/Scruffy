@@ -5,31 +5,31 @@
     <item
         android:id="@+id/nav_home"
         android:title="@string/home"
-        android:icon="@drawable/scruffy_home"/>
+        android:icon="@drawable/home_icon"/>
 
     <item
         android:id="@+id/nav_profile"
         android:title="@string/profileForSA"
-        android:icon="@drawable/scruffy_profile"/>
+        android:icon="@drawable/profile_icon"/>
 
     <item
         android:id="@+id/nav_settings"
         android:title="@string/settingsForSA"
-        android:icon="@drawable/scruffy_settings"/>
+        android:icon="@drawable/settings_icon"/>
 
     <item
         android:id="@+id/nav_about"
         android:title="@string/about"
-        android:icon="@drawable/scruffy_about"/>
+        android:icon="@drawable/about_icon"/>
     <item
         android:id="@+id/nav_github"
         android:title="@string/github"
-        android:icon="@drawable/scruffy_github"/>
+        android:icon="@drawable/github_icon"/>
 
     <item
         android:id="@+id/sign_out"
         android:title="@string/sign_out"
-        android:icon="@drawable/scruffy_sign_out"/>
+        android:icon="@drawable/sign_out_icon"/>
 
 
 

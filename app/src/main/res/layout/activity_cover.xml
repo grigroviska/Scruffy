@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/primaryThemeColor"
-            app:navigationIcon="@drawable/scruffy_back"
+            app:navigationIcon="@drawable/back_icon"
             app:titleTextColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +63,7 @@
                     android:id="@+id/blueSky"
                     android:layout_width="wrap_content"
                     android:layout_height="220dp"
-                    android:src="@drawable/profile_bg"/>
+                    android:src="@drawable/default_cover"/>
 
                 <RadioButton
                     android:id="@+id/radioButton1"

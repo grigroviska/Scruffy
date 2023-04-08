@@ -27,7 +27,7 @@
                 android:id="@+id/materialToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:navigationIcon="@drawable/scruffy_back"
+                app:navigationIcon="@drawable/back_icon"
                 android:background="@color/primaryThemeColor"
                 app:titleTextColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"

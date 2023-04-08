@@ -10,7 +10,10 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gematriga.scruffy.R
+import com.gematriga.scruffy.activity.ChatActivity
 import com.gematriga.scruffy.activity.FullscreenImageActivity
+import com.gematriga.scruffy.databinding.ActivityChatBinding
+import com.gematriga.scruffy.databinding.ChatUserItemLayoutBinding
 import com.gematriga.scruffy.databinding.ReceiverLayoutItemBinding
 import com.gematriga.scruffy.databinding.SendItemLayoutBinding
 import com.gematriga.scruffy.model.MessageModel
@@ -139,7 +142,6 @@ class MessageAdapter(var context : Context, var list : ArrayList<MessageModel>) 
     inner class ReceiverViewHolder(view: View) : RecyclerView.ViewHolder(view){
 
         var binding = ReceiverLayoutItemBinding.bind(view)
-
 
     }
 
