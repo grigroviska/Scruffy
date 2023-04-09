@@ -120,7 +120,6 @@ open class SettingsActivity : AppCompatActivity(){
             bottomSheetDialog.setContentView(bottomSheetView)
             bottomSheetDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-
             val yesButton = bottomSheetView.findViewById<Button>(R.id.signOutforExit)
             val noButton = bottomSheetView.findViewById<Button>(R.id.cancel)
 
@@ -155,8 +154,6 @@ open class SettingsActivity : AppCompatActivity(){
             }
         }
         return dir!!.delete()
-
-
 
     }
 

@@ -242,9 +242,30 @@ class HomeActivity : AppCompatActivity() {
 
     private fun signOut() {
 
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
+        val bottomSheetView = layoutInflater.inflate(R.layout.sign_out_layout, null)
+        val bottomSheetDialog = BottomSheetDialog(this@HomeActivity, R.style.CustomBottomSheetDialog)
+        bottomSheetDialog.setContentView(bottomSheetView)
+        bottomSheetDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+
+        val yesButton = bottomSheetView.findViewById<Button>(R.id.signOutforExit)
+        val noButton = bottomSheetView.findViewById<Button>(R.id.cancel)
+
+        bottomSheetDialog.show()
+
+        yesButton.setOnClickListener {
+            // Perform sign out and navigate to MainActivity
             auth.signOut()
             startActivity(Intent(this, MainActivity::class.java))
             finish()
+            bottomSheetDialog.dismiss()
+        }
+
+        noButton.setOnClickListener {
+            // Dismiss the bottom sheet
+            bottomSheetDialog.dismiss()
+        }
 
     }
 

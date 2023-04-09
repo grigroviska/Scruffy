@@ -4,6 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/menu_single_icon"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,6 +20,7 @@
         android:textColor="@color/textThemeColor"
         android:text="Are you sure you want to sign out of your account?"
         />
+
 
     <Button
         android:id="@+id/signOutforExit"
@@ -27,6 +34,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Cancel"
-        android:padding="16dp" />
+        android:padding="10dp" />
 
 </LinearLayout>
