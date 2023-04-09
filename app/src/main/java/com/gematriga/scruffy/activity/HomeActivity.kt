@@ -1,5 +1,6 @@
 package com.gematriga.scruffy.activity
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
@@ -8,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -21,11 +23,13 @@ import com.gematriga.scruffy.R
 import com.gematriga.scruffy.adapter.ChatAdapter
 import com.gematriga.scruffy.databinding.ActivityHomeBinding
 import com.gematriga.scruffy.model.UserModel
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.sign_out_layout.*
 import kotlinx.android.synthetic.main.nav_header.*
 import java.util.*
 import kotlin.system.exitProcess
@@ -235,23 +239,15 @@ class HomeActivity : AppCompatActivity() {
 
 
     }
-    /*
-    private fun replaceFragment(fragment: Fragment){
 
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragmentContainerView, fragment)
-        fragmentTransaction.commit()
-        binding.drawerLayout.closeDrawer(GravityCompat.START)
-    }*/
+    private fun signOut() {
 
-    private fun signOut(){
-
-        auth.signOut()
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
+            auth.signOut()
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
 
     }
+
 
     private fun github(){
 

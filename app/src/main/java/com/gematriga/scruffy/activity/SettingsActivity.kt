@@ -6,12 +6,12 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import com.gematriga.scruffy.R
 import com.gematriga.scruffy.databinding.ActivitySettingsBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -115,20 +115,29 @@ open class SettingsActivity : AppCompatActivity(){
 
         binding.signOutLayout.setOnClickListener {
 
-            val builder = AlertDialog.Builder(this@SettingsActivity)
-            builder.setTitle("Are you sure?")
-            builder.setMessage("Are you going out :(")
-            builder.setPositiveButton("Yes") { dialog, which ->
+            val bottomSheetView = layoutInflater.inflate(R.layout.sign_out_layout, null)
+            val bottomSheetDialog = BottomSheetDialog(this@SettingsActivity, R.style.CustomBottomSheetDialog)
+            bottomSheetDialog.setContentView(bottomSheetView)
+            bottomSheetDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
+
+            val yesButton = bottomSheetView.findViewById<Button>(R.id.signOutforExit)
+            val noButton = bottomSheetView.findViewById<Button>(R.id.cancel)
+
+            bottomSheetDialog.show()
+
+            yesButton.setOnClickListener {
+                // Perform sign out and navigate to MainActivity
                 auth.signOut()
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
+                bottomSheetDialog.dismiss()
+            }
 
+            noButton.setOnClickListener {
+                // Dismiss the bottom sheet
+                bottomSheetDialog.dismiss()
             }
-            builder.setNegativeButton("No") { dialog, which ->
-            }
-            val dialog = builder.create()
-            dialog.show()
 
         }
 
