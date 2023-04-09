@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -28,6 +29,8 @@ open class SettingsActivity : AppCompatActivity(){
 
     private var currentId : String? = null
     private var selectedImg : Uri? = null
+
+    private var clearedSizeMB : Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,14 +105,7 @@ open class SettingsActivity : AppCompatActivity(){
 
         binding.clearCacheLayout.setOnClickListener {
 
-            val cacheDir = this.cacheDir
-            deleteDir(cacheDir)
-
-            Snackbar.make(it, "Cache cleared.", Snackbar.LENGTH_LONG)
-                .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
-                .setBackgroundTint(ContextCompat.getColor(this, R.color.primaryThemeColor))
-                .setTextColor(ContextCompat.getColor(this, R.color.white))
-                .show()
+            clearCache(this ,it)
 
         }
 
@@ -143,6 +139,61 @@ open class SettingsActivity : AppCompatActivity(){
 
     }
 
+    fun clearCache(context: Context,view: View) {
+        // Get cache directory before clearing
+        val cacheDir = context.cacheDir
+        val initialCacheSize = getDirectorySize(cacheDir)
+
+        // Clear cache
+        deleteDir(cacheDir)
+
+        // Get cache directory after clearing
+        val updatedCacheSize = getDirectorySize(cacheDir)
+
+        // Calculate size cleared
+        val clearedSize = initialCacheSize - updatedCacheSize
+
+        // Show toast message with cleared size
+        clearedSizeMB = clearedSize / (1024 * 1024)
+
+        if (clearedSizeMB!! <= 10){
+
+            Snackbar.make(view, "The cache has low data value now, please do not repeat it too much.", Snackbar.LENGTH_LONG)
+                .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
+                .setBackgroundTint(ContextCompat.getColor(context, R.color.primaryThemeColor))
+                .setTextColor(ContextCompat.getColor(context, R.color.white))
+                .show()
+
+        }else{
+
+            Snackbar.make(view, "Cache cleared: $clearedSizeMB MB", Snackbar.LENGTH_LONG)
+                .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
+                .setBackgroundTint(ContextCompat.getColor(context, R.color.primaryThemeColor))
+                .setTextColor(ContextCompat.getColor(context, R.color.white))
+                .show()
+
+        }
+
+
+    }
+
+    private fun getDirectorySize(dir: File?): Long {
+        var size = 0L
+        if (dir != null && dir.isDirectory) {
+            val children = dir.list()
+            for (i in children.indices) {
+                val child = File(dir, children[i])
+                size += if (child.isDirectory) {
+                    getDirectorySize(child)
+                } else {
+                    child.length()
+                }
+            }
+        }
+        return size
+    }
+
+
     private fun deleteDir(dir: File?): Boolean {
         if (dir != null && dir.isDirectory) {
             val children = dir.list()
@@ -153,8 +204,12 @@ open class SettingsActivity : AppCompatActivity(){
                 }
             }
         }
-        return dir!!.delete()
-
+        return if (dir == null || dir.length() <= (10 * 1024 * 1024)) {
+            // Skip deleting if file or directory size is less than or equal to 10 MB
+            true
+        } else {
+            dir.delete()
+        }
     }
 
 
