@@ -2,12 +2,21 @@ package com.gematriga.scruffy.activity
 
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.AnimationDrawable
 import android.media.MediaPlayer
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.text.util.Linkify
+import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
@@ -15,6 +24,7 @@ import androidx.core.content.ContextCompat
 import com.gematriga.scruffy.R
 import com.gematriga.scruffy.databinding.ActivityAboutBinding
 import com.gematriga.scruffy.databinding.ActivityCoverBinding
+import org.w3c.dom.Text
 
 class AboutActivity : AppCompatActivity() {
 
@@ -27,16 +37,74 @@ class AboutActivity : AppCompatActivity() {
         binding = ActivityAboutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val github = "https://github.com/grigroviska/Scruffy"
-        val carrd = "https://alperkaragozoglu.carrd.co"
         val mail = "karagozoglualper@protonmail.com"
-        val paragraph = "Creative and Designer: $github \nContact: $carrd \nMail: $mail"
+        val paragraph = "Creative and Designer: Grigroviska \nContact: Alper Karagözoğlu \nMail: $mail"
         binding.contactText.text = paragraph
-        Linkify.addLinks(binding.contactText, Linkify.ALL)
 
-        binding.aboutText.text = "This is a messaging application.\n" +
-                "                \"                However, this explanation is not that short.In addition, users of this application reflect their lifestyles on their profiles.\\n\" +\n" +
-                "                \"If you are a developer, please try to add improvements to this application."
+        // Create a SpannableString from the contact paragraph text
+        val spannableString = SpannableString(paragraph)
+
+        // Define the clickable span for the GitHub link
+        val clickableSpanGitHub = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                // Handle the click event, e.g. navigate to the GitHub link
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/grigroviska/Scruffy"))
+                startActivity(intent)
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                // Customize the appearance of the clickable link, if desired
+                ds.color = Color.WHITE // Set the link color
+                ds.typeface = Typeface.defaultFromStyle(Typeface.BOLD) // Make text bold
+                ds.isUnderlineText = true // Add underline to the link
+            }
+        }
+
+        // Define the clickable span for the Carrd link
+        val clickableSpanCarrd = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                // Handle the click event, e.g. navigate to the Carrd link
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://alperkaragozoglu.carrd.co"))
+                startActivity(intent)
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                // Customize the appearance of the clickable link, if desired
+                ds.color = Color.WHITE // Set the link color
+                ds.typeface = Typeface.defaultFromStyle(Typeface.BOLD)// Make text bold
+                ds.isUnderlineText = true // Add underline to the link
+            }
+        }
+
+        // Define the clickable span for the Mail link
+        val clickableSpanMail = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                // Handle the click event, e.g. navigate to the Carrd link
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("mailto:$mail"))
+                startActivity(intent)
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                // Customize the appearance of the clickable link, if desired
+                ds.color = Color.WHITE // Set the link color
+                ds.typeface = Typeface.defaultFromStyle(Typeface.BOLD)// Make text bold
+                ds.isUnderlineText = true // Add underline to the link
+            }
+        }
+
+        // Set the clickable spans for the Google and GitHub links in the SpannableString
+        spannableString.setSpan(clickableSpanGitHub, paragraph.indexOf("Grigroviska"), paragraph.indexOf("Grigroviska") + "Grigroviska".length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(clickableSpanCarrd, paragraph.indexOf("Alper Karagözoğlu"), paragraph.indexOf("Alper Karagözoğlu") + "Alper Karagözoğlu".length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(clickableSpanMail, paragraph.indexOf("$mail"), paragraph.indexOf("$mail") + "$mail".length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        // Set the SpannableString as the text for the TextView
+        binding.contactText.text = spannableString
+
+        // Make the TextView clickable
+        binding.contactText.movementMethod = LinkMovementMethod.getInstance()
+
+        binding.aboutText.text = "This is a messaging application.\n\n" +
+                "However, this explanation is not that short.In addition, users of this application reflect their lifestyles on their profiles. \n If you are a developer, please try to add improvements to this application. \n Also, thanks for checking out this project, don't forget to star and follow up :)"
 
 
         // Load the animation
@@ -94,7 +162,7 @@ class AboutActivity : AppCompatActivity() {
 
     // Release MediaPlayer resources when the activity is destroyed
     override fun onDestroy() {
-        mediaPlayer?.release()
+        mediaPlayer?.stop()
         mediaPlayer = null
         super.onDestroy()
     }

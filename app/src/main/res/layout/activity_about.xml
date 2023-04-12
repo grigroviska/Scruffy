@@ -46,11 +46,34 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#70000000"
+        android:background="#80000000"
         app:layout_constraintBottom_toBottomOf="@+id/background"
         app:layout_constraintEnd_toEndOf="@+id/background"
         app:layout_constraintStart_toStartOf="@+id/background"
         app:layout_constraintTop_toTopOf="@+id/background"/>
+
+    <TextView
+        android:id="@+id/contactText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textSize="20sp"
+        android:textColor="@color/primaryThemeColor"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/topbar"
+        app:layout_constraintEnd_toEndOf="@id/background"
+        app:layout_constraintStart_toStartOf="@id/background"/>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="18dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/contactText"
+        app:layout_constraintEnd_toEndOf="@id/background"
+        app:layout_constraintStart_toStartOf="@id/background"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -59,20 +82,13 @@
         app:layout_constraintBottom_toBottomOf="@+id/background"
         app:layout_constraintEnd_toEndOf="@+id/background"
         app:layout_constraintStart_toStartOf="@+id/background"
-        app:layout_constraintTop_toTopOf="@+id/background">
+        app:layout_constraintTop_toBottomOf="@+id/line">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/contactText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/aboutText"
