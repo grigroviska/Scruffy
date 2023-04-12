@@ -138,6 +138,23 @@ class AboutActivity : AppCompatActivity() {
         // Start the animation on the text view
         binding.aboutText.startAnimation(animation)
 
+        val appNameAnimator = ObjectAnimator.ofFloat(binding.appName, "alpha", 1f, 0f, 1f)
+        appNameAnimator.duration = 1000
+
+        val repeatAnimator = ValueAnimator.ofInt(0, 3)
+        repeatAnimator.duration = 1000
+        repeatAnimator.repeatCount = 4
+
+        // Start the repeatAnimator to flash the Appname text
+        repeatAnimator.start()
+
+        repeatAnimator.addUpdateListener { animator ->
+            if (animator.animatedValue as Int == 0) {
+                // Start the ObjectAnimator when the repeat starts
+                appNameAnimator.start()
+            }
+        }
+
 
         // Initialize the MediaPlayer object with the audio file
         mediaPlayer = MediaPlayer.create(this, R.raw.tetris)
