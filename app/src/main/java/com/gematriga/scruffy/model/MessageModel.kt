@@ -7,5 +7,6 @@ data class MessageModel(
     var senderId : String? = "",
     var timeStamp: Long = 0,
     var imageUrl: String?= "",
-    var messageType: String?= ""
+    var messageType: String?= "",
+    var lastMessage: String? = null
 )

@@ -15,11 +15,10 @@ import com.gematriga.scruffy.activity.UpdateProfile
 import com.gematriga.scruffy.databinding.ChatUserItemLayoutBinding
 import com.gematriga.scruffy.databinding.ShortprofileBinding
 import com.gematriga.scruffy.model.UserModel
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
 
 
 class ChatAdapter(var context : Context, var list : ArrayList<UserModel>) : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
+
 
 
     inner class ChatViewHolder(view : View) : RecyclerView.ViewHolder(view){
@@ -55,6 +54,13 @@ class ChatAdapter(var context : Context, var list : ArrayList<UserModel>) : Recy
             Glide.with(context).load(user.imageUrl).into(binding.uNickPhoto)
             binding.uNickName.text = user.name
 
+            val builder = AlertDialog.Builder(context)
+            builder.setView(view)
+
+            val dialog = builder.create()
+            dialog.show()
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
             binding.uNickPhoto.setOnClickListener {
 
                 val intent = Intent(context, FullscreenImageActivity::class.java)
@@ -70,6 +76,7 @@ class ChatAdapter(var context : Context, var list : ArrayList<UserModel>) : Recy
                 goToOtherProfile.putExtra("fromChat", "true")
                 goToOtherProfile.putExtra("uid", user.uid)
                 context.startActivity(goToOtherProfile)
+                dialog.dismiss()
 
             }
 
@@ -78,18 +85,13 @@ class ChatAdapter(var context : Context, var list : ArrayList<UserModel>) : Recy
                 val intent = Intent(context, ChatActivity::class.java)
                 intent.putExtra("uid", user.uid)
                 context.startActivity(intent)
+                dialog.dismiss()
 
             }
 
-            val builder = AlertDialog.Builder(context)
-            builder.setView(view)
-
-            val dialog = builder.create()
-            dialog.show()
-            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
-
         }
+
+
 
     }
 

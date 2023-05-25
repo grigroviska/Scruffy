@@ -30,8 +30,6 @@ open class SettingsActivity : AppCompatActivity(){
     private var currentId : String? = null
     private var selectedImg : Uri? = null
 
-    private var clearedSizeMB : Long? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
@@ -52,40 +50,46 @@ open class SettingsActivity : AppCompatActivity(){
 
         }
 
+        try {
+            //Querying the status of the dark mode
+            val appSettingPrefs : SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
+            val sharedPrefsEdit : SharedPreferences.Editor = appSettingPrefs.edit()
+            val isNightModeOn : Boolean = appSettingPrefs.getBoolean("NightMode",false)
 
-        //Querying the status of the dark mode
-        val appSettingPrefs : SharedPreferences = getSharedPreferences("AppSettingPrefs",0)
-        val sharedPrefsEdit : SharedPreferences.Editor = appSettingPrefs.edit()
-        val isNightModeOn : Boolean = appSettingPrefs.getBoolean("NightMode",false)
+            if (isNightModeOn){
 
-        if (isNightModeOn){
+                binding.nightModeSwitch.isChecked = true
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
-            binding.nightModeSwitch.isChecked = true
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-
-
-        }else{
-            binding.nightModeSwitch.isSelected = false
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-
-        }
-
-        //Dark mode on/off
-        binding.nightModeSwitch.setOnClickListener {
-
-            if(isNightModeOn){
-
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                sharedPrefsEdit.putBoolean("NightMode", false)
 
             }else{
-
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                sharedPrefsEdit.putBoolean("NightMode", true)
+                binding.nightModeSwitch.isSelected = false
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
             }
-            sharedPrefsEdit.apply()
+
+            //Dark mode on/off
+            binding.nightModeSwitch.setOnClickListener {
+
+                if(isNightModeOn){
+
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    sharedPrefsEdit.putBoolean("NightMode", false)
+
+                }else{
+
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    sharedPrefsEdit.putBoolean("NightMode", true)
+
+                }
+                sharedPrefsEdit.apply()
+            }
+        }catch (e : Exception){
+
+            Toast.makeText(this@SettingsActivity,e.localizedMessage,Toast.LENGTH_LONG).show()
+
         }
+
 
         binding.coverMode.setOnClickListener {
 
@@ -139,7 +143,7 @@ open class SettingsActivity : AppCompatActivity(){
 
     }
 
-    fun clearCache(context: Context,view: View) {
+    fun clearCache(context: Context, view: View) {
         // Get cache directory before clearing
         val cacheDir = context.cacheDir
         val initialCacheSize = getDirectorySize(cacheDir)
@@ -153,28 +157,13 @@ open class SettingsActivity : AppCompatActivity(){
         // Calculate size cleared
         val clearedSize = initialCacheSize - updatedCacheSize
 
-        // Show toast message with cleared size
-        clearedSizeMB = clearedSize / (1024 * 1024)
-
-        if (clearedSizeMB!! <= 10){
-
-            Snackbar.make(view, "The cache has low data value now, please do not repeat it too much.", Snackbar.LENGTH_LONG)
-                .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
-                .setBackgroundTint(ContextCompat.getColor(context, R.color.primaryThemeColor))
-                .setTextColor(ContextCompat.getColor(context, R.color.white))
-                .show()
-
-        }else{
-
-            Snackbar.make(view, "Cache cleared: $clearedSizeMB MB", Snackbar.LENGTH_LONG)
-                .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
-                .setBackgroundTint(ContextCompat.getColor(context, R.color.primaryThemeColor))
-                .setTextColor(ContextCompat.getColor(context, R.color.white))
-                .show()
-
-        }
-
-
+        // Show Snackbar with cleared size
+        val clearedSizeMB = clearedSize / (1024 * 1024)
+        Snackbar.make(view, "Cache cleared: $clearedSizeMB MB", Snackbar.LENGTH_LONG)
+            .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
+            .setBackgroundTint(ContextCompat.getColor(context, R.color.primaryThemeColor))
+            .setTextColor(ContextCompat.getColor(context, R.color.white))
+            .show()
     }
 
     private fun getDirectorySize(dir: File?): Long {
@@ -193,7 +182,6 @@ open class SettingsActivity : AppCompatActivity(){
         return size
     }
 
-
     private fun deleteDir(dir: File?): Boolean {
         if (dir != null && dir.isDirectory) {
             val children = dir.list()
@@ -204,12 +192,7 @@ open class SettingsActivity : AppCompatActivity(){
                 }
             }
         }
-        return if (dir == null || dir.length() <= (10 * 1024 * 1024)) {
-            // Skip deleting if file or directory size is less than or equal to 10 MB
-            true
-        } else {
-            dir.delete()
-        }
+        return dir!!.delete()
     }
 
 

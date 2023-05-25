@@ -5,7 +5,6 @@ import android.animation.ValueAnimator
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
-import android.graphics.drawable.AnimationDrawable
 import android.media.MediaPlayer
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -15,16 +14,11 @@ import android.text.SpannableString
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.text.util.Linkify
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.view.animation.LinearInterpolator
-import androidx.core.content.ContextCompat
 import com.gematriga.scruffy.R
 import com.gematriga.scruffy.databinding.ActivityAboutBinding
-import com.gematriga.scruffy.databinding.ActivityCoverBinding
-import org.w3c.dom.Text
 
 class AboutActivity : AppCompatActivity() {
 

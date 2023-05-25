@@ -15,22 +15,25 @@ import android.text.TextWatcher
 import android.util.Log
 import android.util.Patterns
 import android.view.View
-import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import com.bumptech.glide.Glide
-import com.gematriga.scruffy.R
 import com.gematriga.scruffy.adapter.MessageAdapter
 import com.gematriga.scruffy.databinding.ActivityChatBinding
 import com.gematriga.scruffy.model.MessageModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_chat.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -52,6 +55,7 @@ class ChatActivity : AppCompatActivity() {
     private var dialog : ProgressDialog?= null
     private var url : String? = null
     private var nickName : String? = null
+    private var current : FirebaseUser? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +64,7 @@ class ChatActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         senderUid = FirebaseAuth.getInstance().uid.toString()
-
+        current = FirebaseAuth.getInstance().currentUser!!
         receiverUid = intent.getStringExtra("uid")!!
 
         list = ArrayList()
@@ -127,6 +131,7 @@ class ChatActivity : AppCompatActivity() {
             startActivity(goToOtherProfile)
 
         }
+
 
         val handler = Handler()
         binding.messageBox.addTextChangedListener(object : TextWatcher{
@@ -350,7 +355,6 @@ class ChatActivity : AppCompatActivity() {
 
     }
 
-/*
     override fun onDestroy() {
         super.onDestroy()
 
@@ -358,7 +362,6 @@ class ChatActivity : AppCompatActivity() {
             .child(senderUid!!)
             .setValue("Offline")
     }
-*/
     private fun checkData(){
 
         dReference = FirebaseDatabase.getInstance().getReference("users")
@@ -375,4 +378,5 @@ class ChatActivity : AppCompatActivity() {
             }
 
     }
+
 }

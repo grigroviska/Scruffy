@@ -141,40 +141,6 @@
 
                 </RelativeLayout>
 
-
-                <RelativeLayout
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/mainThemeFontIcon"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/scruffy_s_icon"
-                        android:background="@drawable/round_back_main_text_font"
-                        android:padding="12dp"/>
-
-                    <TextView
-                        android:layout_marginStart="20dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="Main Theme Font"
-                        android:textColor="#FFF"
-                        android:textStyle="bold"
-                        android:layout_toEndOf="@+id/mainThemeFontIcon"
-                        />
-
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:switchMinWidth="50dp"
-                        android:theme="@style/nightModeSwitch"/>
-                </RelativeLayout>
-
             </LinearLayout>
 
             <LinearLayout
